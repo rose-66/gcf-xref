@@ -133,5 +133,5 @@ Minimal set in `requirements.txt`:
 - Missing config file → File is routed to Dead Letter; verify `CONFIG_BUCKET` and the presence of `config/<stem>.json`.
 - Pattern mismatch → Confirm `filename_pattern` matches the full object path.
 - Column mismatch → Ensure `expected_columns` equals the CSV column count.
-- Permission denied → Verify service account IAM on all referenced buckets.
+- Permission denied → Verify service account IAM permissions.
 
