@@ -1,0 +1,5 @@
+{
+  "expected_columns": 15,
+  "filename_pattern": "raw_akumin_unified_payer_mapping.csv",
+  "target_path": "akumin_unified_payer_mapping/"
+}

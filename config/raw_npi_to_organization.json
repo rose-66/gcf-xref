@@ -1,0 +1,6 @@
+{
+  "expected_columns": 10,
+  "filename_pattern": "raw_npi_to_organization.csv",
+  "target_path": "npi_organization/"
+}
+    

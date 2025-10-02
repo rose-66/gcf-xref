@@ -1,0 +1,6 @@
+{
+  "expected_columns": 3,
+  "filename_pattern": "raw_phelix_procedure.csv",
+  "target_path": "phelix_procedure/"
+}
+    

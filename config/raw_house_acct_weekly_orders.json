@@ -1,0 +1,6 @@
+{
+  "expected_columns": 3,
+  "filename_pattern": "raw_house_acct_weekly_orders.csv",
+  "target_path": "commercial_non_pi_quota/"
+}
+    

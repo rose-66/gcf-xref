@@ -1,0 +1,6 @@
+{
+  "expected_columns": 3,
+  "filename_pattern": "raw_addcharge_mapping.csv",
+  "target_path": "addcharge_mapping/"
+}
+   

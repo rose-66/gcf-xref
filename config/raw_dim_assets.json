@@ -1,0 +1,7 @@
+{
+  "expected_columns": 53,
+  "filename_pattern": "raw_dim_assets.csv",
+  "target_path": "dim_data/"
+}
+    
+    

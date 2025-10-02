@@ -1,0 +1,6 @@
+{
+  "expected_columns": 2,
+  "filename_pattern": "raw_classification_non_pi.csv",
+  "target_path": "akumin_unified_payer_mapping/"
+}
+

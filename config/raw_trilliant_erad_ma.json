@@ -1,0 +1,6 @@
+{
+  "expected_columns": 12,
+  "filename_pattern": "raw_trilliant_erad_ma.csv",
+  "target_path": "trilliant_data/"
+}
+    

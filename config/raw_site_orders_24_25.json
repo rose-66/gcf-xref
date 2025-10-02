@@ -1,0 +1,6 @@
+{
+  "expected_columns": 68,
+  "filename_pattern": "raw_site_orders*.csv",
+  "target_path": "fixed_vs_adg_orders/"
+}
+    

@@ -1,0 +1,7 @@
+{
+  "expected_columns": 62,
+  "filename_pattern": "raw_same_store_weekly_orders_budget.csv",
+  "target_path": "fixed_vs_adg_orders/"
+}
+
+    

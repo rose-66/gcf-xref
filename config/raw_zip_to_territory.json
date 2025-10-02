@@ -1,0 +1,6 @@
+{
+  "expected_columns": 7,
+  "filename_pattern": "raw_zip_to_territory.csv",
+  "target_path": "commercial_non_pi_quota/"
+}
+    

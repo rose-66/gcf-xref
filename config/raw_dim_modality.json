@@ -1,0 +1,5 @@
+{
+  "expected_columns": 14,
+  "filename_pattern": "raw_dim_modality.csv",
+  "target_path": "dim_data/"
+}

@@ -1,0 +1,5 @@
+{
+  "expected_columns": 5,
+  "filename_pattern": "raw_commercial_non_pi_quota_terr*.csv",
+  "target_path": "commercial_non_pi_quota/"
+}

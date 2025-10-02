@@ -1,0 +1,7 @@
+{
+  "expected_columns": 117,
+  "filename_pattern": "raw_actual_scans_from_aos.csv",
+  "target_path": "fixed_vs_adg_orders/"
+}
+
+    

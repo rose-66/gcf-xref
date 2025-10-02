@@ -1,0 +1,6 @@
+{
+  "expected_columns": 7,
+  "filename_pattern": "raw_zipcode_territory*.csv",
+  "target_path": "zipcode_territory_assignments/"
+}
+    

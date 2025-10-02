@@ -1,0 +1,6 @@
+{
+  "expected_columns": 17,
+  "filename_pattern": "raw_all_quota_mgmt_hedge.csv",
+  "target_path": "commercial_non_pi_quota/"
+}
+    

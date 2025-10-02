@@ -1,0 +1,5 @@
+{
+  "expected_columns": 14,
+  "filename_pattern": "raw_quota_by_month*.csv",
+  "target_path": "commercial_non_pi_quota/"
+}

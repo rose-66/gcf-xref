@@ -1,0 +1,6 @@
+{
+  "expected_columns": 96,
+  "filename_pattern": "raw_fuji_carriers.csv",
+  "target_path": "fuji_dimensions/"
+}
+    

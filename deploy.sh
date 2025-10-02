@@ -1,0 +1,12 @@
+gcloud functions deploy gcf-xref-processor \
+  --gen2 \
+  --runtime python311 \
+  --entry-point xref_processor \
+  --region us-central1 \
+  --source . \
+  --trigger-event google.cloud.storage.object.v1.finalized \
+  --trigger-resource xref-landing-zone \
+  --set-env-vars CONFIG_BUCKET=xref-config,DEAD_LETTER_BUCKET=xref-dead-letter \
+  --service-account xref-gcf-sa@sbox-rgodoy-001-20251124.iam.gserviceaccount.com \
+  --project sbox-rgodoy-001-20251124 \
+  --memory 512Mi
