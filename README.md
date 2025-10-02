@@ -10,6 +10,11 @@ This Google Cloud Function (Gen2) processes CSV files uploaded to the `xref-land
 
 Entry point: `xref_processor` in `main.py` (CloudEvent triggered by GCS finalize events).
 
+### Flow
+```
+xref file upload (gsutil) → xref-landing-zone (trigger) → (Eventarc) gcf-xref-processor → (validate/route) { xref-ext-tables (success), xref-dead-letter (fail) }
+```
+
 ### Repository layout
 - `main.py`: Cloud Function implementation
 - `test_main.py`: Unit tests using `pytest` and `unittest.mock`
@@ -92,10 +97,10 @@ bash deploy.sh
 
 ### Permissions
 The Cloud Function service account must have at minimum:
-- On `xref-landing-zone`: `roles/storage.objectViewer`
-- On `$CONFIG_BUCKET`: `roles/storage.objectViewer`
-- On `xref-ext-tables`: `roles/storage.objectCreator` (or `Storage Object Admin` if broader is acceptable)
-- On `$DEAD_LETTER_BUCKET`: `roles/storage.objectCreator`
+- `roles/storage.objectViewer`
+- `roles/storage.objectCreator` 
+- `roles/run.invoker`
+- `roles/eventarc.eventReceiver`
 
 ### Observability
 - Logs are emitted via Python `logging` and viewable in Cloud Logging.
