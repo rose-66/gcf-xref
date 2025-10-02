@@ -1,5 +1,5 @@
 {
-  "expected_columns": 9,
+  "expected_columns": 8,
   "filename_pattern": "raw_2025_tableau_data_fw20.csv",
   "target_path": "fixed_vs_adg_orders/"
 }

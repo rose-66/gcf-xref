@@ -118,7 +118,7 @@ def test_column_mismatch_to_dead_letter(mock_read_csv, mock_storage_client, mock
     
     # 3. Assert the destination argument passed was the Dead Letter Bucket
     target_bucket_name_arg = mock_copy_blob.call_args[0][2]
-    # FIX: Assert against the known string literal value (or the correctly mocked constant)
+    # Assert against the known string literal value (or the correctly mocked constant)
     assert target_bucket_name_arg == 'xref-dead-letter' 
 
 
@@ -147,5 +147,5 @@ def test_config_not_found_to_dead_letter(mock_read_csv, mock_storage_client, moc
     
     # 3. Assert the destination argument passed was the Dead Letter Bucket
     target_bucket_name_arg = mock_copy_blob.call_args[0][2]
-    # FIX: Assert against the known string literal value
+    # Assert against the known string literal value
     assert target_bucket_name_arg == 'xref-dead-letter'

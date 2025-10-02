@@ -138,7 +138,7 @@ def xref_processor(cloud_event: Dict[str, Any]):
         target_path = validated_config['target_path']
         expected_pattern = validated_config['filename_pattern']
         
-        # NEW CHECK: Match the actual GCS path against the explicit pattern
+        # Match the actual GCS path against the explicit pattern
         if not fnmatch.fnmatch(source_blob_name, expected_pattern):
             reason = f"Filename '{source_blob_name}' does not match the mandatory pattern '{expected_pattern}' defined in config file."
             return process_dead_letter(source_bucket_name, source_blob_name, reason)
@@ -150,7 +150,7 @@ def xref_processor(cloud_event: Dict[str, Any]):
         # Download the file to the simple /tmp/[filename] path
         blob.download_to_filename(temp_local_file)
         
-        # Read and count columns (Using encoding='latin-1' fix)
+        # Read and count columns (Using encoding='latin-1')
         df = pd.read_csv(temp_local_file, nrows=1, header=None, encoding='latin-1') 
         actual_columns = len(df.columns)
         
