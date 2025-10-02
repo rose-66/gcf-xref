@@ -1,4 +1,4 @@
 # --- Python Specific Files ---
-*.pyc                 # Compiled python files
-__pycache__/          # Python cache directories
-.pytest_cache/        # Pytest cache directory
+*.pyc
+__pycache__/
+.pytest_cache/
