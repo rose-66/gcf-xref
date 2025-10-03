@@ -2,3 +2,7 @@
 *.pyc
 __pycache__/
 .pytest_cache/
+
+/xref_tables/target/
+/xref_tables/dbt_packages/
+/xref_tables/logs/
