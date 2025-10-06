@@ -1,0 +1,32 @@
+version: 2
+
+sources:
+  - name: slv_xref
+    tables:
+      - name: ext_trilliant_erad_ma
+        description: "List of providers and their affiliated practices"
+        columns:
+          - name: provider_id
+            description: "A unique identifier of the provider"
+          - name: provider_npi
+            description: "The provider's National Provider Identifier (unique 10 digit)"
+          - name: active_provider
+            description: "A boolean indicator (TRUE or FALSE) if the provider is active or not"
+          - name: provider_last_name
+            description: "Last name of the healthcare provider"
+          - name: provider_first_name
+            description: "First name of the healthcare provider"
+          - name: provider_middle_name
+            description: "Middle name / intiial of the healthcare provider"
+          - name: provider_suffix
+            description: "A suffix for the provider's name (Jr., Sr., II, etc.)"
+          - name: provider_affiliated_practice_1_zip_code
+            description: "The zip code of the provider's first affiliated practice"
+          - name: provider_affiliated_practice_2_zip_code
+            description: "The zip code of the provider's second affiliated practice"
+          - name: provider_affiliated_practice_3_zip_code
+            description: "The zip code of the provider's third affiliated practice"
+          - name: provider_affiliated_practice_4_zip_code
+            description: "The zip code of the provider's fourth affiliated practice"
+          - name: provider_affiliated_practice_5_zip_code
+            description: "The zip code of the provider's fifth affiliated practice"

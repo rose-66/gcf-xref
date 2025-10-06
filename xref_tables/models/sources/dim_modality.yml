@@ -1,0 +1,36 @@
+version: 2
+
+sources:
+  - name: slv_xref
+    tables:
+    - name: ext_dim_modality
+      description: "Information about medical imaging modalities, including their type, name, and status."
+      columns:
+        - name: modality_id
+          description: "Unique identifier of the Modality"
+        - name: modality_code
+          description: "Acronym code of the modality"
+        - name: an_modality_id
+          description: "Unique identifer of the AN Modality"
+        - name: modality_name
+          description: "Name of the modality"
+        - name: sf_modality_name
+          description: "Name of the SF modality"
+        - name: is_imaging
+          description: "Boolean indicator (0 or 1) whether the modality is an imaging or not"
+        - name: reporting_modality_type
+          description: "Type of modality (mammography, CT, lab work, etc.)"
+        - name: is_active
+          description: "Boolean indicator (0 or 1) whether the modality is active"
+        - name: z_insert_date
+          description: "The date and time the record is inserted"
+        - name: z_last_mod_date
+          description: "The date and time the record was last modified"
+        - name: z_last_mod_by
+          description: "The user who last modified the record / date and time"
+        - name: point_factor
+          description: "Quantitative job evaluation system of modality"
+        - name: department_id
+          description: "A numerical identifier of the department of modality"
+        - name: survey_modality_name
+          description: "Modality name (CT, Bone density, x-ray, etc.) by a survey"

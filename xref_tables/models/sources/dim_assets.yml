@@ -1,0 +1,114 @@
+version: 2
+
+sources: 
+  - name: slv_xref
+    tables: 
+    - name: ext_dim_assets
+      description: "Inventory of medical imaging assets, including their type, location, and status, and manufacturer, service entity, and software versions."
+      columns:
+        - name: asset_id
+          description: "Unique identifier of the asset"
+        - name: source_id
+          description: "The unique identifier of the data source for the asset"
+        - name: modality_id
+          description: "Identifier for the type of medical imaging modality"
+        - name: asset_class_id
+          description: "Identifier for the class of the asset"
+        - name: asset_name
+          description: "The name given to the asset"
+        - name: asset_segment
+          description: "A numerical digit of the segment for the asset"
+        - name: asset_description
+          description: "A general description of the asset"
+        - name: asset_type
+          description: "The type of asset (eg. Unit, Site, etc.)"
+        - name: sales_lease_back
+          description: "A boolean indicating whether an asset is part of sales leaseback agreement"
+        - name: current_location
+          description: "The current location code of the asset"
+        - name: location_effective_date
+          description: "The date and time the asset's location became effective"
+        - name: manufacturer
+          description: "The company that manufactured the asset"
+        - name: model
+          description: "The model name/number of the asset"
+        - name: servicing_entity
+          description: "The entity responsible for servicing the asset"
+        - name: company_code
+          description: "The code for the company that owns the asset"
+        - name: in_service_date
+          description: "The date and time the asset is put into service"
+        - name: is_active
+          description: "Boolean indicator (0 or 1) whether the asset is active"
+        - name: fixed_mobile
+          description: "Indicates whether the asset is fixed or mobile"
+        - name: software_version
+          description: "The version of the software in the asset"
+        - name: unit_disposition_status
+          description: "The disposition status of the asset unit"
+        - name: gff_date
+          description: "The date and time the asset was designated as 'good for fleet' (GFF)"
+        - name: alliance_net_id
+          description: "The unique identifier for the asset on the Alliance network"
+        - name: z_insert_date
+          description: "The date and time the record was inserted in the database"
+        - name: z_last_mod_date
+          description: "The date and time the record was last modified"
+        - name: z_last_mod_by
+          description: "The user who last modified the record"
+        - name: interim_unit
+          description: "A boolean indicating whether the asset is an interim unit (0 or 1)"
+        - name: on_orders_date
+          description: "The date and time the asset was placed in order"
+        - name: division
+          description: "The division to which the asset belongs (alliance imaging, mobile legacy, default account)"
+        - name: hold_date
+          description: "The date and time a hold was placed on the asset."
+        - name: hold_comments
+          description: "Comments related to the hold on the asset"
+        - name: hold_name
+          description: "The name of the hold placed on the asset"
+        - name: is_on_hold
+          description: "A boolean indicating whether the asset is on hold (0 or 1)"
+        - name: reserved_date
+          description: "The date and time the asset is reserved"
+        - name: reserved_opportunity_name
+          description: "The name of the opportunity for which the asset is reserved."
+        - name: is_reserved
+          description: "Boolean indicator (Yes or No) whether an asset is reserved"
+        - name: availability_date
+          description: "The date and time the asset is available"
+        - name: tagged_opportunity_date_1
+          description: "The date and time of the first tagged opportunity."
+        - name: tagged_opportunity_name_1
+          description: "The name of the first tagged opportunity."
+        - name: tagged_opportunity_state_1
+          description: "The state of the first tagged opportunity."
+        - name: tagged_opportunity_date_2
+          description: "The date and time of the second tagged opportunity."
+        - name: tagged_opportunity_name_2
+          description: "The name of the second tagged opportunity."
+        - name: tagged_opportunity_state_2
+          description: "The state of the second tagged opportunity."
+        - name: tagged_opportunity_date_3
+          description: "The date and time of the third tagged opportunity."
+        - name: tagged_opportunity_name_3
+          description: "The name of the third tagged opportunity."
+        - name: tagged_opportunity_state_3
+          description: "The state of the third tagged opportunity."
+        - name: manufacturer_serial_number
+          description: "The serial number assigned by the manufacturer."
+        - name: tag_reserved_comments
+          description: "Comments related to tagging or reserving the asset."
+        - name: ct_slices
+          description: "The number of CT slices the scanner can perform."
+        - name: availability_in_fleet
+          description: "A boolean indicator (0 or 1) whether there is an availability of the asset within the fleet."
+        - name: asset_type_description
+          description: "A description of the asset type"
+        - name: manufacturer_date
+          description: "Date and time the asset was manufactured"
+        - name: warranty_start_date
+          description: "The start date and time of the asset's warranty"
+        - name: warranty_end_date
+          description: "The end date and time of the asset's warranty"
