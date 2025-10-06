@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: slv_xref
+    tables:
+    - name: ext_house_acct_weekly_orders
+      description: "Weekly orders for the house account for each modality group."
+      columns:
+      - name: modality_group
+        description: "The modality group (MR, PET, other(CT, US, MAMMO), misc(XR, BD, NM))."
+      - name: total_weekly_orders
+        description: "The total (fixed + adg) weekly orders for the house account."
+      - name: fy_25_orders
+        description: "The total (fixed + adg) orders for the year."
+          

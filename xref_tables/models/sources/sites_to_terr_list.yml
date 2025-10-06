@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: slv_xref
+    tables:
+    - name: ext_sites_to_terr_list
+      description: "A list of unique sites and their corresponding territories."
+      columns:
+        - name: fixed_territory_name
+          description: "Name of the territory."
+        - name: site_name
+          description: "Site locations."

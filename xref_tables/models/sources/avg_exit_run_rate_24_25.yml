@@ -1,0 +1,22 @@
+version: 2
+
+sources:
+  - name: slv_xref
+    tables:
+    - name: ext_avg_exit_run_rate_24_25
+      description: "Average exit run rate for weekly and monthly fixed, adg, and total."
+      columns:
+        - name: modality_group
+          description: "The modality group (MR, PET, other(CT, US, MAMMO), misc(XR, BD, NM))."
+        - name: fixed_weekly
+          description: "The average exit run rate for the weekly fixed."
+        - name: fixed_monthly
+          description: "The average exit run rate for the monthly fixed."
+        - name: adg_weekly
+          description: "The average exit run rate for the weekly adg."
+        - name: adg_monthly
+          description: "The average exit run rate for the monthly adg."
+        - name: total_weekly
+          description: "The average exit run rate for the weekly total (fixed + adg)."
+        - name: total_monthly
+          description: "The average exit run rate for the monthly total (fixed + adg)."

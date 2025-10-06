@@ -1,0 +1,36 @@
+version: 2
+ 
+sources: 
+  - name: slv_xref
+    tables:
+    - name: ext_other_quota
+      description: "Monthly quotas for other imaging modalities."
+      columns: 
+        - name: q1_jan_21
+          description: "95% quota for January in 21 business days."
+        - name: q1_feb_19
+          description: "96% quota for February in 19 business days."
+        - name: q1_mar_21
+          description: "97% quota for March in 21 business days."
+        - name: q2_apr_22
+          description: "99% quota for April in 22 business days."
+        - name: q2_may_21
+          description: "100% quota for May in 21 business days."
+        - name: q2_jun_20
+          description: "100% quota for June in 20 business days."
+        - name: q2_jul_22
+          description: "101% quota for July in 22 business days."
+        - name: q2_aug_21
+          description: "102% quota for August in 21 business days."
+        - name: q3_sep_21
+          description: "103% quota for September in 21 business days."
+        - name: q4_oct_22
+          description: "103% quota for October in 20 business days."
+        - name: q4_nov_18
+          description: "103% quota for November in 18 business days."
+        - name: q4_dec_22
+          description: "101% quota for December in 22 business days."
+        - name: fy_25_quota
+          description: "Sum of all monthly quotas."
+        - name: notes
+          description: "Any notes if there is no quota."

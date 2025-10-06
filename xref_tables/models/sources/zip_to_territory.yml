@@ -1,0 +1,14 @@
+version: 2
+
+sources: 
+  - name: slv_xref 
+    tables:
+    - name: zip_to_territory 
+      description: "A mapping of zip codes to their corresponding territories."
+      columns:
+        - name: count
+          description: "Number of zip codes in the territory. May be dropped."
+        - name: zip_code
+          description: "5 digit code of the territory."
+        - name: new_territory_name
+          description: "Name of the territory."
