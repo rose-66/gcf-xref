@@ -1,0 +1,15 @@
+# This is the Sheet1 tab in the akumin unified payer mapping v2 file. 
+# Note: there is no column names in this tab, so the column names are based on the highlighted column names in the kumin unified payer mapping v2 tab/file.
+
+version: 2
+
+sources:
+  - name: slv_xref
+    tables:
+    - name: ext_classification_non_pi
+      description: "Classifies if the payer is a PI or Commercial."
+      columns:
+        - name: classification
+          description: "Category of entity"
+        - name: pi_vs_commercial
+          description: "High-level grouping of payer type: PI vs. Commercial."

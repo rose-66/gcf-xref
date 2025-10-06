@@ -1,0 +1,122 @@
+# A lot of fields in some columns are empty or 0, so some of the column descriptions may not be accurate.
+
+version: 2
+
+sources:
+  - name: slv_xref 
+    tables:
+    - name: ext_fuji_sites
+      description: "Fuji site information including contact details, physical address, tax IDs, and various codes related to medical imaging, billing, and system integraton."
+      columns:
+        - name: site_code
+          description: "Acronym of the city/site"
+        - name: site_description
+          description: "Description of the Sitecode"
+        - name: street
+          description: "Address of the site"
+        - name: city
+          description: "City where site is located"
+        - name: zip
+          description: "5 digit code of the site"
+        - name: contact
+          description: "Name of who to contact"
+        - name: phone
+          description: "Phone number of the contact for the site"
+        - name: logo
+          description: "Logo of the site?"
+        - name: active
+          description: "Determines whether a site is active"
+        - name: directions
+          description: "Directions on how to get to the site"
+        - name: map
+          description: "Map of the site's directions"
+        - name: map_description
+          description: "Description of map"
+        - name: overread_site
+          description: "Determines whether a service provides a second expert review of medical imaging and other data (Y/N)"
+        - name: demographics2
+          description: "2nd Demographics for site"
+        - name: demographics1
+          description: "1st Demographics for site"
+        - name: states
+          description: "State acronym of the site"
+        - name: place_code
+          description: "Code of the site"
+        - name: tax_id
+          description: "9 digit Tax ID"
+        - name: ssn_or_ein
+          description: "Identifies if it's a Social Security Number or Employer Identification Number (EIN)"
+        - name: pos
+          description: "Place of Service Code, 2 digit code indicating where a medical service is provided"
+        - name: modalities
+          description: "The type of medical imaging procedure"
+        - name: fda_cert_code
+          description: "Food and Drug Administration Certification Code"
+        - name: clia_number
+          description: "Unique 10 digit identifier required for certain laboratory tests"
+        - name: remit_site
+          description: "Health care billing and location work (remittance and site of care)"
+        - name: needs_billing_integration
+          description: "A boolean (0 or 1) indicating whether they need billing integration"
+        - name: user_emits_sites_tax_id
+          description: "A boolean (0 or 1) indicating whether a user emits sites tax ID"
+        - name: npi
+          description: "National Provider Identifier. a unique 10-digit identification number issued to health care providers"
+        - name: group_npi
+          description: "Group NPIN idenfifaction number issued to health care providers"
+        - name: fax
+          description: "FAX Number for a site"
+        - name: facility_code
+          description: "Facility code of the site"
+        - name: easy_link_email
+          description: "Email of easy link"
+        - name: easy_link_password
+          description: "Password corresponding to the email easy link"
+        - name: default_resrc
+          description: "Default medical intervention protocol when a patient goes into cardiac or respiratory arrest, in the absence of a 'Do Not Resuscitate' (DNR) order."
+        - name: country
+          description: "Country of the site"
+        - name: dont_display_address_on_mam_letters
+          description: "A boolean (0 or 1) indicating whether to display the address"
+        - name: website_url
+          description: "The link of the site"
+        - name: service_level_agreement
+          description: "The level of the service agreed upon"
+        - name: gfi_fax_maker_email
+          description: "Email of the GFIFAXMAKER"
+        - name: gfi_fax_maker_first_name
+          description: "First name of the GFIFAXMAKER"
+        - name: gfi_fax_maker_last_name
+          description: "Last name of the GFIFAXMAKER"
+        - name: patient_address_lookup
+          description: "Look up digit (0 or 1) of the patient's address"
+        - name: default_treferr_id
+          description: "Default ID of TREFERR"
+        - name: pay_to_address
+          description: "Address of the payee"
+        - name: site_id
+          description: "Unique identifier of the Site"
+        - name: report_template_id
+          description: "ID of the Report Template"
+        - name: imagine_integration_id
+          description: "ID of the imagine integration"
+        - name: available_to_patient
+          description: "Indicates whether they are available to patient (0 or 1)"
+        - name: use_synapse_pacs_api
+          description: "a set of tools that allows other applications to integrate with SYNAPSE to manage medical imaging data."
+        - name: synapse_pacs_server
+          description: "a server-based system from Fujifilm that acts as the backbone for a Picture Archiving and Communication System (PACS) in healthcare facilities"
+        - name: synapse_api_launch_key
+          description: "Launch Key for SYNAPSEAPI"
+        - name: use_3rd_party_image_notification
+          description: "Boolean (0 or 1) to indicate that a 3rd party user gets image notifications"
+        - name: secure_url_encryption_key
+          description: "Encryption key"
+        - name: secure_timed
+          description: "Time of the secure key in seconds"
+        - name: use_secure_url
+          description: "Boolean indicating whether a secure URL is used"
+        - name: available_to_referrer
+          description: "Boolean indicating whether it is availabke to referrer"
+        - name: nrdr_facility_id
+          description: "Nationwide Readmissions Database Facility identifier"

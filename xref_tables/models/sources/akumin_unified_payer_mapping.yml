@@ -1,0 +1,40 @@
+# Note: There is another tab called Sheet1, but it has no column names. left column is a classification (eg attorney, auto insurance, law firm, health plan/health payer, etc.) , and the right column determines if it's a commericial or PI (PI vs. Commercial)
+
+version: 2
+
+sources:
+  - name: slv_xref 
+    tables:
+    - name: ext_akumin_unified_payer_mapping1
+      description: "Provides information about payers, including their name, address, and other details."
+      columns:
+        - name: carrier_code
+          description: "Unique internal/external identifier for the payer"
+        - name: source
+          description: "The system or vendor where this record originated (e.g., eRAD, Abbadox, FUJI)."
+        - name: payer_description
+          description: "Raw/unprocessed name of the payer"
+        - name: original_payer_name
+          description: "Cleaned or standardized version of the payer’s name"
+        - name: state_name
+          description: "U.S. state linked to the payer"
+        - name: matched_name
+          description: "Final standardized/matched entity name after data processing."
+        - name: matched_address
+          description: "Standardized mailing or office address for the matched entity."
+        - name: bar_id
+          description: "Identifier for an individual attorney (state bar license ID)."
+        - name: firm_id
+          description: "Identifier for a law firm or organization (groups multiple attorneys)."
+        - name: name_score
+          description: "Confidence score (0–100) showing how closely the raw name matches the standardized/matched entity."
+        - name: good_match
+          description: "Boolean flag (TRUE/FALSE) showing if the entity match is considered reliable."
+        - name: classification
+          description: "Category of entity (ALL OTHER - SELF PAY / CLIENT BILL / DO NOT USE, ATTORNEY, ATTORNEY W/ FIRM, LAW FIRM, WORKERS COMP, COMMERCIAL INSURER, LITIGATION FUNDING, HEALTH PLAN / HEALTH PAYER, AUTO INSURANCE)"
+        - name: pi_vs_commercial
+          description: "High-level grouping of payer type: PI vs. Commercial."
+        - name: parent_firm_id
+          description: "Links a law firm entity to a parent/umbrella firm (if part of a larger network)."
+        - name: firm_name
+          description: "Standardized law firm name associated with the firm_id or parent_firm_id."

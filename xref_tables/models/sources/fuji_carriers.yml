@@ -1,0 +1,202 @@
+# A lot of fields in most columns are empty or 0, so some of the column descriptions may not be accurate.
+
+version: 2
+
+sources:
+  - name: slv_xref 
+    tables:
+    - name: ext_fuji_carriers
+      description: "List of Fuji carriers, detailing their contact information and various billing and claims processing rules for healthcare services."
+      columns:
+        - name: carrier
+          description: "The name of the insurance carrier"
+        - name: carrier_address
+          description: "The street address of the carrier"
+        - name: carrier_city
+          description: "The city where the carrier is located"
+        - name: carrier_zip
+          description: "The 5-digit zip code of the carrier's address."
+        - name: carrier_id
+          description: "A 5 digit unique identifier for the carrier."
+        - name: carrier_state
+          description: "The state where the carrier is located."
+        - name: carrier_address2
+          description: "An additional address line for the carrier."
+        - name: factor
+          description: "A value used in calculations related to billing or payment"
+        - name: phone
+          description: "The phone number for the carrier."
+        - name: carrier_notes
+          description: "Any additional notes or comments about the carrier."
+        - name: active
+          description: "Indicates if the carrier record is currently active (Y/N)"
+        - name: fee_schedule
+          description: "A reference to the fee schedule used for billing this carrier."
+        - name: claim_type
+          description: "The type of claim submitted to this carrier."
+        - name: carrier_type
+          description: "The category or type of the carrier."
+        - name: copay_req
+          description: "Indicates if a copay is required for services billed to this carrier."
+        - name: coverage
+          description: "The type/amount of coverage provided by this carrier."
+        - name: group_id
+          description: "The group identification number for the carrier."
+        - name: clia_number
+          description: "The Clinical Laboratory Improvement Amendments (CLIA) number required for certain lab tests."
+        - name: site_to_bill
+          description: "Specifies which site is responsible for billing this carrier."
+        - name: field11_constant
+          description: "A constant value used for a specific field (field 11) in billing forms."
+        - name: use_field11_constant
+          description: "A boolean indicating whether to use the constant value for field 11"
+        - name: use_field31_for_facility_name
+          description: "A boolean indicating whether to use field 31 for the facility name."
+        - name: bill_to_pos
+          description: "Specifies the place of service to be used for billing."
+        - name: prior_auth_number19
+          description: "The prior authorization number for field 19."
+        - name: edi_number
+          description: "The Electronic Data Interchange (EDI) number for the carrier."
+        - name: accept_assignment
+          description: "A boolean indicating whether the carrier accepts assignment of benefits."
+        - name: qualifier
+          description: "A code that specifies the type of identifier used in a claim."
+        - name: use_field19_for_narrative
+          description: "A boolean indicating whether to use field 19 for a narrative description."
+        - name: field19_narrative
+          description: "The narrative text used for field 19."
+        - name: pos
+          description: "The Place of Service code, indicating where the medical service was provided."
+        - name: use_tos
+          description: "A boolean indicating whether to use the TOS (Type of Service) code."
+        - name: use_pos
+          description: "A boolean indicating whether to use the POS (Place of Service) code."
+        - name: billing_type
+          description: "The type of billing or service."
+        - name: requires_access_num
+          description: "A boolean indicating if an access number is required for claims."
+        - name: tos
+          description: "The Type of Service Code"
+        - name: upin_to_use
+          description: "The Unique Physician Identification Number (UPIN) to be used."
+        - name: requires_referral_number
+          description: "A boolean indicating whether a referral number is required for claims."
+        - name: ref_qualifier
+          description: "A code that specifies the type of referral."
+        - name: referrer_chosen
+          description: "Indicates which referrer was selected"
+        - name: abn_req
+          description: "A boolean indicating whether an Advance Beneficiary Notice of Noncoverage (ABN) is required."
+        - name: eremit_id
+          description: "The Electronic Remittance ID for billing."
+        - name: allow_eligibility
+          description: "A boolean indicating whether eligibility checks are allowed."
+        - name: hpid
+          description: "The Health Plan Identifier"
+        - name: requires_premium_ref_tin
+          description: "A boolean indicating if a premium reference TIN (Taxpayer Identification Number) is required."
+        - name: cms17b_blank
+          description: "A boolean indicating whether to leave CMS form field 17b blank."
+        - name: cms24j_legacy_blank
+          description: "A boolean indicating whether to leave the legacy CMS form field 24j blank."
+        - name: cms24j_npi_blank
+          description: "A boolean indicating whether to leave the NPI (National Provider Identifier) CMS form field 24j blank."
+        - name: cms32a_npi_blank
+          description: "A boolean indicating whether to leave the NPI CMS form field 32a blank."
+        - name: cms32b_legacy_blank
+          description: "A boolean indicating whether to leave the legacy CMS form field 32b blank."
+        - name: cms33a_npi_blank
+          description: "A boolean indicating whether to leave the NPI CMS form field 33a blank."
+        - name: cms33b_legacy_blank
+          description: "A boolean indicating whether to leave the legacy CMS form field 33b blank."
+        - name: cms17b_npi_option
+          description: "NPIN option for CMS form field 17b"
+        - name: cms24j_legacy_option
+          description: "Group Number for CMS form field 24J"
+        - name: cms24j_npi_option
+          description: "NPIN option for CMS form field 24J"
+        - name: cms32a_npi_option
+          description: "NPIN option for CMS form field 32A"
+        - name: cms32b_legacy_option
+          description: "Group Number for CMS form field 32B"
+        - name: cms33a_npi_option
+          description: "Group Number for CMS form field 33A"
+        - name: cms33b_legacy_option
+          description: "Group Number for CMS form field 33B"
+        - name: cms17b_npi_text
+          description: "The text to be used for the NPI field on CMS form 17b."
+        - name: cms24j_legacy_text
+          description: "The text to be used for the NPI legacy field on CMS form 24j"
+        - name: cms24j_npi_text
+          description: "The text to be used for the NPI field on CMS form 24j"
+        - name: cms32a_npi_text
+          description: "The text to be used for the NPI field on CMS form 32a"
+        - name: cms32b_legacy_text
+          description: "The text to be used for the NPI legacy field on CMS form 32b"
+        - name: cms33a_npi_text
+          description: "The text to be used for the NPI field on CMS form 33a"
+        - name: cms33b_legacy_text
+          description: "The text to be used for the NPI legacy field on CMS form 33b"
+        - name: cms17b_npi_text_option
+          description: "A boolean indicating whether the NPI text option is selected for CMS form field 17b."
+        - name: cms24j_legacy_text_option
+          description: "A boolean indicating whether the legacy text option is selected for CMS form field 24j."
+        - name: cms24j_npi_text_option 
+          description: "A boolean indicating whether the NPI text option is selected for CMS form field 24j."
+        - name: cms32a_npi_text_option
+          description: "A boolean indicating whether the NPI text option is selected for CMS form field 32a"
+        - name: cms32b_legacy_text_option
+          description: "A boolean indicating whether the legacy text option is selected for CMS form field 32b."
+        - name: cms33a_npi_text_option
+          description: "A boolean indicating whether the NPI text option is selected for CMS form field 33a."
+        - name: cms33b_legacy_text_option
+          description: "A boolean indicating whether the legacy text option is selected for CMS form field 33b."
+        - name: cms17a_blank
+          description: "A boolean indicating whether to leave CMS form field 17a blank."
+        - name: cms17a_list_option
+          description: "A boolean indicating whether the list option is selected for CMS form field 17a."
+        - name: cms17a_text
+          description: "The text to be used for CMS form field 17a."
+        - name: cms17a_text_option
+          description: "A boolean indicating whether the text option is selected for CMS form field 17a."
+        - name: cms17b_npi_list_option
+          description: "A boolean indicating whether the NPI list option is selected for CMS form field 17b."
+        - name: cms24j_legacy_list_option
+          description: "A boolean indicating whether the legacy list option is selected for CMS form field 24j."
+        - name: cms24j_npi_list_option
+          description: "A boolean indicating whether the NPI list option is selected for CMS form field 24j."
+        - name: cms32a_npi_list_option
+          description: "A boolean indicating whether the NPI list option is selected for CMS form field 32a."
+        - name: cms32b_legacy_list_option
+          description: "A boolean indicating whether the legacy list option is selected for CMS form field 32b."
+        - name: cms33a_npi_list_option
+          description: "A boolean indicating whether the NPI list option is selected for CMS form field 33a."
+        - name: cms33b_legacy_list_option
+          description: "A boolean indicating whether the legacy list option is selected for CMS form field 33b."
+        - name: cms31_blank
+          description: "A boolean indicating whether to leave CMS form field 31 blank."
+        - name: cms31_list_option
+          description: "A boolean indicating whether the list option is selected for CMS form field 31."
+        - name: cms31_option
+          description: "UPIN for CMS form field 31"
+        - name: cms31_text
+          description: "The text to be used for CMS form field 31."
+        - name: cms31_text_option
+          description: "A boolean indicating whether the text option is selected for CMS form field 31."
+        - name: medigap_id
+          description: "The ID for Medigap insurance."
+        - name: use_medigap_id
+          description: "A boolean indicating whether to use the Medigap ID."
+        - name: requires_msp
+          description: "A boolean indicating whether a Medicare Secondary Payer (MSP) claim is required."
+        - name: use_none_box11
+          description: "A boolean indicating whether to check the 'none' box in field 11 of the CMS form."
+        - name: requires_bcbs_legacy
+          description: "A boolean indicating whether a legacy Blue Cross Blue Shield claim is required."
+        - name: carrier_code
+          description: "An alternative code for the carrier."
+        - name: direct_billing_id
+          description: "The ID used for direct billing."
+        - name: imagine_carrier_id
+          description: "The ID for the carrier within the Imagine system."

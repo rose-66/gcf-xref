@@ -1,0 +1,36 @@
+version: 2
+
+sources: 
+  - name: slv_xref
+    tables:
+    - name: ext_subtotal
+      description: "Subtotal of the quota by month by territory minus the house acct."
+      columns:
+        - name: modality_group
+          description: " The category of the modality"
+        - name: january
+          description: "Total modality group quota for January."
+        - name: february
+          description: "Total modality group quota for February."
+        - name: march
+          description: "Total modality group quota for March."
+        - name: april
+          description: "Total modality group quota for April."
+        - name: may
+          description: "Total modality group quota for May."
+        - name: june
+          description: "Total modality group quota for June."
+        - name: july
+          description: "Total modality group quota for July."
+        - name: august
+          description: "Total modality group quota for August."
+        - name: september
+          description: "Total modality group quota for September."
+        - name: october
+          description: "Total modality group quota for October."
+        - name: november
+          description: "Total modality group quota for November."
+        - name: december
+          description: "Total modality group quota for December."
+        - name: ytd_25_quota
+          description: "Total modality group quota for the year."

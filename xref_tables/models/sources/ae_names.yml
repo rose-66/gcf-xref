@@ -1,0 +1,18 @@
+version: 2
+
+sources:
+  - name: slv_xref
+    tables:
+    - name: ext_ae_names
+      description: "A list of account executives and their corresponding territories."
+      columns:
+        - name: new_territory_name
+          description: "Name of the territory."
+        - name: region
+          description: "Geographic area."
+        - name: manager
+          description: "Name of the regional manager."
+        - name: vp
+          description: "Name of the VP."
+        - name: ae 
+          description: "Name of the Account Executive."

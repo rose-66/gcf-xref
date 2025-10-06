@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: slv_xref 
+    tables:
+    - name: ext_addcharge_mapping 
+      description: "A mapping of medical procedure codes to their corresponding descriptions."
+      columns:
+        - name: addcharge_code
+          description: "A sequential number or internal code."
+        - name: scan_description
+          description: "A description of the clinical procedure / test."
+        - name: separate_scan
+          description: "A flag (yes or no) that indicates whether this procedure is considered a separate, billable scan or bundles/non-billable."
