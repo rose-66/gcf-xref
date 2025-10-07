@@ -1,0 +1,146 @@
+version: 2
+
+sources:
+
+  - name: slv_xref
+    tables:
+    - name: ext_site_orders_budget_vs_act
+      description: "A comparison of orders between budget and actual."
+      columns:
+        - name: leader
+          description: "Indicates that the leader is Fixed-ADG or Fixed non- ADG leader."
+        - name: region
+          description: "Geographical region of where the site is located."
+        - name: site_name
+          description: "Site location name."
+        - name: site_name_tableau
+          description: "The name of the site as it appears in Tableau."
+        - name: modality_group
+          description: "The group or category in which the modality belongs."
+        - name: fw1_25_budget
+          description: "The budgeted value for the first fiscal week of 2025."
+        - name: fw1_25_actual
+          description: "The actual value for the first fiscal week of 2025."
+        - name: fw1_25_gap
+          description: "The gap between the budgeted and actual value for the first fiscal week of 2025."
+        - name: fw2_25_budget 
+          description: "The budgeted value for the second fiscal week of 2025."
+        - name: fw2_25_actual
+          description: "The actual value for the second fiscal week of 2025."
+        - name: fw2_25_gap
+          description: "The gap between the budgeted and actual value for the second fiscal week of 2025."
+        - name: fw3_25_budget
+          description: "The budgeted value for the third fiscal week of 2025."
+        - name: fw3_25_actual
+          description: "The actual value for the third fiscal week of 2025."
+        - name: fw3_25_gap
+          description: "The gap between the budgeted and actual value for the third fiscal week of 2025."
+        - name: fw4_25_budget
+          description: "The budgeted value for the fourth fiscal week of 2025."
+        - name: fw4_25_actual
+          description: "The actual value for the fourth fiscal week of 2025."
+        - name: fw4_25_gap
+          description: "The gap between the budgeted and actual value for the fourth fiscal week of 2025."
+        - name: fw5_25_budget
+          description: "The budgeted value for the fifth fiscal week of 2025."
+        - name: fw5_25_actual
+          description: "The actual value for the fifth fiscal week of 2025."
+        - name: fw5_25_gap
+          description: "The gap between the budgeted and actual value for the fifth fiscal week of 2025."
+        - name: fw6_25_budget
+          description: "The budgeted value for the sixth fiscal week of 2025."
+        - name: fw6_25_actual
+          description: "The actual value for the sixth fiscal week of 2025."
+        - name: fw6_25_gap
+          description: "The gap between the budgeted and actual value for the sixth fiscal week of 2025."
+        - name: fw7_25_budget
+          description: "The budgeted value for the seventh fiscal week of 2025."
+        - name: fw7_25_actual
+          description: "The actual value for the seventh fiscal week of 2025."
+        - name: fw7_25_gap
+          description: "The gap between the budgeted and actual value for the seventh fiscal week of 2025."
+        - name: fw8_25_budget
+          description: "The budgeted value for the eighth fiscal week of 2025."
+        - name: fw8_25_actual
+          description: "The actual value for the eighth fiscal week of 2025."
+        - name: fw8_25_gap
+          description: "The gap between the budgeted and actual value for the eighth fiscal week of 2025."
+        - name: fw9_25_budget
+          description: "The budgeted value for the ninth fiscal week of 2025."
+        - name: fw9_25_actual
+          description: "The actual value for the ninth fiscal week of 2025."
+        - name: fw9_25_gap
+          description: "The gap between the budgeted and actual value for the ninth fiscal week of 2025."
+        - name: fw10_25_budget
+          description: "The budgeted value for the tenth fiscal week of 2025."
+        - name: fw10_25_actual
+          description: "The actual value for the tenth fiscal week of 2025."
+        - name: fw10_25_gap
+          description: "The gap between the budgeted and actual value for the tenth fiscal week of 2025."
+        - name: fw11_25_budget
+          description: "The budgeted value for the eleventh fiscal week of 2025."
+        - name: fw11_25_actual
+          description: "The actual value for the eleventh fiscal week of 2025."
+        - name: fw11_25_gap
+          description: "The gap between the budgeted and actual value for the eleventh fiscal week of 2025."
+        - name: fw12_25_budget
+          description: "The budgeted value for the twelfth fiscal week of 2025."
+        - name: fw12_25_actual
+          description: "The actual value for the twelfth fiscal week of 2025."
+        - name: fw12_25_gap
+          description: "The gap between the budgeted and actual value for the twelfth fiscal week of 2025."
+        - name: fw13_25_budget
+          description: "The budgeted value for the thirteenth fiscal week of 2025."
+        - name: fw13_25_actual
+          description: "The actual value for the thirteenth fiscal week of 2025."
+        - name: fw13_25_gap
+          description: "The gap between the budgeted and actual value for the thirteenth fiscal week of 2025."
+        - name: fw14_25_budget
+          description: "The budgeted value for the fourteenth fiscal week of 2025."
+        - name: fw14_25_actual
+          description: "The actual value for the fourteenth fiscal week of 2025."
+        - name: fw14_25_gap
+          description: "The gap between the budgeted and actual value for the fourteenth fiscal week of 2025."
+        - name: fw15_25_budget
+          description: "The budgeted value for the fifteenth fiscal week of 2025."
+        - name: fw15_25_actual
+          description: "The actual value for the fifteenth fiscal week of 2025."
+        - name: fw15_25_gap
+          description: "The gap between the budgeted and actual value for the fifteenth fiscal week of 2025."
+        - name: fw16_25_budget
+          description: "The budgeted value for the sixteenth fiscal week of 2025."
+        - name: fw16_25_actual
+          description: "The actual value for the sixteenth fiscal week of 2025."
+        - name: fw16_25_gap
+          description: "The gap between the budgeted and actual value for the sixteenth fiscal week of 2025."
+        - name: fw17_25_budget
+          description: "The budgeted value for the seventeenth fiscal week of 2025."
+        - name: fw17_25_actual
+          description: "The actual value for the seventeenth fiscal week of 2025."
+        - name: fw17_25_gap
+          description: "The gap between the budgeted and actual value for the seventeenth fiscal week of 2025."
+        - name: fw18_25_budget
+          description: "The budgeted value for the eighteenth fiscal week of 2025."
+        - name: fw18_25_actual
+          description: "The actual value for the eighteenth fiscal week of 2025."
+        - name: fw18_25_gap
+          description: "The gap between the budgeted and actual value for the eighteenth fiscal week of 2025."
+        - name: fw19_25_budget
+          description: "The budgeted value for the nineteenth fiscal week of 2025."
+        - name: fw19_25_actual
+          description: "The actual value for the nineteenth fiscal week of 2025."
+        - name: fw19_25_gap
+          description: "The gap between the budgeted and actual value for the nineteenth fiscal week of 2025."  
+        - name: fw20_25_budget
+          description: "The budgeted value for the twentieth fiscal week of 2025."
+        - name: fw20_25_actual
+          description: "The actual value for the twentieth fiscal week of 2025."
+        - name: fw20_25_gap
+          description: "The gap between the budgeted and actual value for the twentieth fiscal week of 2025."
+        - name: ytd_25_budget
+          description: "The budgeted value for the year to date of 2025."
+        - name: ytd_25_actual
+          description: "The actual value for the year to date of 2025."
+        - name: ytd_25_gap
+          description: "The gap between the budgeted and actual value for the year to date of 2025."
+          

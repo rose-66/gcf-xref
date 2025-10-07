@@ -1,0 +1,134 @@
+version: 2
+
+sources:
+  - name: slv_xref
+    tables:
+    - name: ext_same_store_weekly_orders_budget
+      description: "A weekly breakdown of same-store orders and their budget."
+      columns:
+        - name: same_store
+          description: "Indicates that the scan is same store or management fee"
+        - name: leader
+          description: "Indicates that the leader is Fixed-ADG or Fixed non-ADG leader"
+        - name: region
+          description: "Geographical region of where the site is located"
+        - name: site_name
+          description: "Site location name"
+        - name: site_name_tableau
+          description: "The name of the site as it appears in Tableau"
+        - name: modality
+          description: "The type of medical imaging procedure"
+        - name: modality_group
+          description: "The group or category in which the modality belongs"
+        - name: fw1_25
+          description: "The budgeted value for the first fiscal week of 2025."
+        - name: fw2_25
+          description: "The budgeted value for the second fiscal week of 2025."
+        - name: fw3_25
+          description: "The budgeted value for the third fiscal week of 2025."
+        - name: fw4_25
+          description: "The budgeted value for the fourth fiscal week of 2025."
+        - name: fw5_25
+          description: "The budgeted value for the fifth fiscal week of 2025."  
+        - name: fw6_25
+          description: "The budgeted value for the sixth fiscal week of 2025."
+        - name: fw7_25
+          description: "The budgeted value for the seventh fiscal week of 2025."
+        - name: fw8_25
+          description: "The budgeted value for the eighth fiscal week of 2025."
+        - name: fw9_25
+          description: "The budgeted value for the ninth fiscal week of 2025."
+        - name: fw10_25
+          description: "The budgeted value for the tenth fiscal week of 2025."
+        - name: fw11_25
+          description: "The budgeted value for the eleventh fiscal week of 2025."
+        - name: fw12_25
+          description: "The budgeted value for the twelfth fiscal week of 2025."
+        - name: fw13_25
+          description: "The budgeted value for the thirteenth fiscal week of 2025."
+        - name: fw14_25 
+          description: "The budgeted value for the fourteenth fiscal week of 2025."
+        - name: fw15_25
+          description: "The budgeted value for the fifteenth fiscal week of 2025."
+        - name: fw16_25
+          description: "The budgeted value for the sixteenth fiscal week of 2025."
+        - name: fw17_25
+          description: "The budgeted value for the seventeenth fiscal week of 2025."
+        - name: fw18_25
+          description: "The budgeted value for the eighteenth fiscal week of 2025."
+        - name: fw19_25
+          description: "The budgeted value for the nineteenth fiscal week of 2025."
+        - name: fw20_25
+          description: "The budgeted value for the twentieth fiscal week of 2025."
+        - name: fw21_25
+          description: "The budgeted value for the twenty-first fiscal week of 2025."
+        - name: fw22_25
+          description: "The budgeted value for the twenty-second fiscal week of 2025."
+        - name: fw23_25
+          description: "The budgeted value for the twenty-third fiscal week of 2025."
+        - name: fw24_25
+          description: "The budgeted value for the twenty-fourth fiscal week of 2025."
+        - name: fw25_25
+          description: "The budgeted value for the twenty-fifth fiscal week of 2025."
+        - name: fw26_25
+          description: "The budgeted value for the twenty-sixth fiscal week of 2025."
+        - name: fw27_25
+          description: "The budgeted value for the twenty-seventh fiscal week of 2025."
+        - name: fw28_25
+          description: "The budgeted value for the twenty-eighth fiscal week of 2025."
+        - name: fw29_25
+          description: "The budgeted value for the twenty-ninth fiscal week of 2025."
+        - name: fw30_25
+          description: "The budgeted value for the thirtieth fiscal week of 2025."
+        - name: fw31_25
+          description: "The budgeted value for the thirty-first fiscal week of 2025."
+        - name: fw32_25
+          description: "The budgeted value for the thirty-second fiscal week of 2025."
+        - name: fw33_25
+          description: "The budgeted value for the thirty-third fiscal week of 2025."
+        - name: fw34_25
+          description: "The budgeted value for the thirty-fourth fiscal week of 2025."
+        - name: fw35_25
+          description: "The budgeted value for the thirty-fifth fiscal week of 2025."
+        - name: fw36_25
+          description: "The budgeted value for the thirty-sixth fiscal week of 2025."
+        - name: fw37_25
+          description: "The budgeted value for the thirty-seventh fiscal week of 2025."
+        - name: fw38_25
+          description: "The budgeted value for the thirty-eighth fiscal week of 2025."
+        - name: fw39_25
+          description: "The budgeted value for the thirty-ninth fiscal week of 2025."
+        - name: fw40_25
+          description: "The budgeted value for the fortieth fiscal week of 2025."
+        - name: fw41_25
+          description: "The budgeted value for the forty-first fiscal week of 2025."
+        - name: fw42_25
+          description: "The budgeted value for the forty-second fiscal week of 2025."
+        - name: fw43_25 
+          description: "The budgeted value for the forty-third fiscal week of 2025."
+        - name: fw44_25
+          description: "The budgeted value for the forty-fourth fiscal week of 2025."
+        - name: fw45_25
+          description: "The budgeted value for the forty-fifth fiscal week of 2025."
+        - name: fw46_25
+          description: "The budgeted value for the forty-sixth fiscal week of 2025."
+        - name: fw47_25
+          description: "The budgeted value for the forty-seventh fiscal week of 2025."
+        - name: fw48_25
+          description: "The budgeted value for the forty-eighth fiscal week of 2025."
+        - name: fw49_25
+          description: "The budgeted value for the forty-ninth fiscal week of 2025."
+        - name: fw50_25
+          description: "The budgeted value for the fiftieth fiscal week of 2025."
+        - name: fw51_25
+          description: "The budgeted value for the fifty-first fiscal week of 2025."
+        - name: fw52_25
+          description: "The budgeted value for the fifty-second fiscal week of 2025."
+        - name: fw53_25
+          description: "The budgeted value for the fifty-third fiscal week of 2025."
+        # There is an extra column in between fw53_25 and ytd2025, but it is empty (make sure to drop it).
+        - name: ytd_2025
+          description: "The budgeted value for the year to date of 2025."
+
+
+        

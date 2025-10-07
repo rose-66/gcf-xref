@@ -8,4 +8,4 @@ SELECT
     TIMESTAMP("{{ run_started_at }}") AS xref_ingestion_ts,
     t.* -- Selects all columns from the external table after the timestamp
 FROM 
-    `{{ target.project }}.slv_xref.ext_addcharge_mapping` t
+    `{{ target.project }}.slv_xref.ext_2024_tableau_data_fw20` t

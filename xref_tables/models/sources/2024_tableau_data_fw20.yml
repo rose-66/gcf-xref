@@ -1,0 +1,26 @@
+version: 2
+
+sources:
+  - name: slv_xref
+    tables:
+    - name: ext_2024_tableau_data_fw20
+      description: "2024 Tableau Data for 20 Fiscal Weeks."
+      columns:
+        - name: practice
+          description: "The name/location of the practice."
+        - name: site_name
+          description: "The name/location of the site."
+        - name: region
+          description: "Geographical region of where the site is located."
+        - name: units
+          description: "The number of units measured for the site."
+        - name: ris
+          description: "Radiology Information System used at the site."
+        - name: requested_date
+          description: "The fiscal week number when the request was made."
+        - name: modality
+          description: "The type of medical imaging procedure."
+        - name: same_store
+          description: "A boolean indicator (0 or 1) to indicate if the site is a same store location."
+        - name: modality_clean
+          description: "A standardized or cleaned version of the modality name."  

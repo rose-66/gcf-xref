@@ -1,0 +1,24 @@
+version: 2
+
+sources:
+  - name: slv_xref
+    tables:
+    - name: ext_ytd_orders_summary
+      description: "A year to date summary of orders by region in 2025."
+      columns:
+        - name: region
+          description: "Geographical region of where the site is located."
+        - name: modality_group
+          description: "The group or category in which the modality belongs."
+        - name: leader
+          description: "Indicates that the leader is Fixed-ADG or Fixed non- ADG leader."
+        - name: ytd_25_budget
+          description: "The budgeted value for the year to date of 2025."
+        - name: ytd_25_actual
+          description: "The actual value for the year to date of 2025."
+        - name: ytd_25_gap
+          description: "The gap between the budgeted and actual value for the year to date of 2025."
+        - name: percent_attainment
+          description: "The percentage of the budgeted value that has been achieved."
+
+

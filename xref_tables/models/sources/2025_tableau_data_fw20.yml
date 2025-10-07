@@ -1,0 +1,24 @@
+version: 2
+
+sources:
+  - name: slv_xref
+    tables:
+    - name: ext_2025_tableau_data_fw20
+      description: "2025 Tableau Data for 20 Fiscal Weeks."
+      columns:
+        - name: site_name
+          description: "The name/location of the site."
+        - name: practice
+          description: "The name/location of the practice."
+        - name: requested_date 
+          description: "The fiscal week number when the request was made."
+        - name: region 
+          description: "Geographical region of where the site is located."
+        - name: units
+          description: "The number of units measured for the site."
+        - name: modality_group
+          description: "The group or category in which the modality belongs."
+        - name: ris
+          description: "Radiology Information System (eg. Abbadox, FUJI, eRAD, etc.)."
+        - name: same_store
+          description: "A boolean indicator (0 or 1) to indicate if the site is a same store location."

@@ -1,0 +1,145 @@
+version: 2
+
+sources: 
+  - name: slv_xref
+    tables: 
+    - name: ext_site_orders_24_25
+      description: "A comparison of orders between 2024 and 2025."
+      columns:
+        - name: leader
+          description: "Indicates that the leader is Fixed-ADG or Fixed non- ADG leader."
+        - name: region
+          description: "Geographical region of where the site is located."
+        - name: site_name
+          description: "Site location name."
+        - name: site_name_tableau
+          description: "The name of the site as it appears in Tableau."
+        - name: modality_group
+          description: "The group or category in which the modality belongs."
+        - name: fw1_fy24
+          description: "The budgeted value for the first fiscal week of the Fiscal Year 2024."
+        - name: fw1_fy25
+          description: "The budgeted value for the first fiscal week of the Fiscal Year 2025."
+        - name: fw1_growth
+          description: "The growth in orders between 2024 and 2025."
+        - name: fw2_fy24
+          description: "The budgeted value for the second fiscal week of the Fiscal Year 2024."
+        - name: fw2_fy25
+          description: "The budgeted value for the second fiscal week of the Fiscal Year 2025."
+        - name: fw2_growth
+          description: "The growth in orders between 2024 and 2025."
+        - name: fw3_fy24
+          description: "The budgeted value for the third fiscal week of the Fiscal Year 2024."
+        - name: fw3_fy25
+          description: "The budgeted value for the third fiscal week of the Fiscal Year 2025."
+        - name: fw3_growth
+          description: "The growth in orders between 2024 and 2025."
+        - name: fw4_fy24
+          description: "The budgeted value for the fourth fiscal week of the Fiscal Year 2024."
+        - name: fw4_fy25
+          description: "The budgeted value for the fourth fiscal week of the Fiscal Year 2025."
+        - name: fw4_growth
+          description: "The growth in orders between 2024 and 2025."
+        - name: fw5_fy24
+          description: "The budgeted value for the fifth fiscal week of the Fiscal Year 2024."
+        - name: fw5_fy25
+          description: "The budgeted value for the fifth fiscal week of the Fiscal Year 2025."
+        - name: fw5_growth
+          description: "The growth in orders between 2024 and 2025."
+        - name: fw6_fy24
+          description: "The budgeted value for the sixth fiscal week of the Fiscal Year 2024."
+        - name: fw6_fy25
+          description: "The budgeted value for the sixth fiscal week of the Fiscal Year 2025."
+        - name: fw6_growth
+          description: "The growth in orders between 2024 and 2025."
+        - name: fw7_fy24
+          description: "The budgeted value for the seventh fiscal week of the Fiscal Year 2024."
+        - name: fw7_fy25
+          description: "The budgeted value for the seventh fiscal week of the Fiscal Year 2025."
+        - name: fw7_growth
+          description: "The growth in orders between 2024 and 2025."
+        - name: fw8_fy24
+          description: "The budgeted value for the eighth fiscal week of the Fiscal Year 2024."
+        - name: fw8_fy25
+          description: "The budgeted value for the eighth fiscal week of the Fiscal Year 2025."
+        - name: fw8_growth
+          description: "The growth in orders between 2024 and 2025."
+        - name: fw9_fy24
+          description: "The budgeted value for the ninth fiscal week of the Fiscal Year 2024."
+        - name: fw9_fy25
+          description: "The budgeted value for the ninth fiscal week of the Fiscal Year 2025."
+        - name: fw9_growth
+          description: "The growth in orders between 2024 and 2025."
+        - name: fw10_fy24
+          description: "The budgeted value for the tenth fiscal week of the Fiscal Year 2024."
+        - name: fw10_fy25
+          description: "The budgeted value for the tenth fiscal week of the Fiscal Year 2025."
+        - name: fw10_growth
+          description: "The growth in orders between 2024 and 2025."
+        - name: fw11_fy24
+          description: "The budgeted value for the eleventh fiscal week of the Fiscal Year 2024."
+        - name: fw11_fy25
+          description: "The budgeted value for the eleventh fiscal week of the Fiscal Year 2025."
+        - name: fw11_growth
+          description: "The growth in orders between 2024 and 2025."
+        - name: fw12_fy24
+          description: "The budgeted value for the twelfth fiscal week of the Fiscal Year 2024."
+        - name: fw12_fy25
+          description: "The budgeted value for the twelfth fiscal week of the Fiscal Year 2025."
+        - name: fw12_growth
+          description: "The growth in orders between 2024 and 2025."
+        - name: fw13_fy24
+          description: "The budgeted value for the thirteenth fiscal week of the Fiscal Year 2024."
+        - name: fw13_fy25
+          description: "The budgeted value for the thirteenth fiscal week of the Fiscal Year 2025."
+        - name: fw13_growth
+          description: "The growth in orders between 2024 and 2025."
+        - name: fw14_fy24
+          description: "The budgeted value for the fourteenth fiscal week of the Fiscal Year 2024."
+        - name: fw14_fy25
+          description: "The budgeted value for the fourteenth fiscal week of the Fiscal Year 2025."
+        - name: fw14_growth
+          description: "The growth in orders between 2024 and 2025."
+        - name: fw15_fy24
+          description: "The budgeted value for the fifteenth fiscal week of the Fiscal Year 2024."
+        - name: fw15_fy25
+          description: "The budgeted value for the fifteenth fiscal week of the Fiscal Year 2025."
+        - name: fw15_growth
+          description: "The growth in orders between 2024 and 2025."
+        - name: fw16_fy24
+          description: "The budgeted value for the sixteenth fiscal week of the Fiscal Year 2024."
+        - name: fw16_fy25
+          description: "The budgeted value for the sixteenth fiscal week of the Fiscal Year 2025."
+        - name: fw16_growth
+          description: "The growth in orders between 2024 and 2025."
+        - name: fw17_fy24
+          description: "The budgeted value for the seventeenth fiscal week of the Fiscal Year 2024."
+        - name: fw17_fy25
+          description: "The budgeted value for the seventeenth fiscal week of the Fiscal Year 2025."
+        - name: fw17_growth
+          description: "The growth in orders between 2024 and 2025."
+        - name: fw18_fy24
+          description: "The budgeted value for the eighteenth fiscal week of the Fiscal Year 2024."
+        - name: fw18_fy25
+          description: "The budgeted value for the eighteenth fiscal week of the Fiscal Year 2025."
+        - name: fw18_growth
+          description: "The growth in orders between 2024 and 2025."
+        - name: fw19_fy24
+          description: "The budgeted value for the nineteenth fiscal week of the Fiscal Year 2024."
+        - name: fw19_fy25 
+          description: "The budgeted value for the nineteenth fiscal week of the Fiscal Year 2025."
+        - name: fw19_growth
+          description: "The growth in orders between 2024 and 2025."
+        - name: fw20_fy24
+          description: "The budgeted value for the twentieth fiscal week of the Fiscal Year 2024."
+        - name: fw20_fy25
+          description: "The budgeted value for the twentieth fiscal week of the Fiscal Year 2025."
+        - name: fw20_growth
+          description: "The growth in orders between 2024 and 2025."
+        - name: ytd_fy24
+          description: "The budgeted value for the year to date of the Fiscal Year 2024."
+        - name: ytd_fy25
+          description: "The budgeted value for the year to date of the Fiscal Year 2025."
+        - name: ytd_growth
+          description: "The growth in orders between 2024 and 2025."
+
