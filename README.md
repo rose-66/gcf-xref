@@ -120,6 +120,26 @@ See `config/` for samples like:
 
 These demonstrate the required shape and how to set `target_path`.
 
+### dbt project (xref_tables)
+
+The `xref_tables/` directory is a dbt project that models the external data into queryable tables.
+
+- `models/sources/*.yml`: Source definitions (table and column docs; optional freshness)
+- `models/raw_tables/*.sql`: External table DDLs (BigQuery `CREATE EXTERNAL TABLE` statements executed via dbt)
+- `models/stg_tables/*.sql`: Staging models that select from externals and add an ingestion timestamp column
+- `models/tables/*.sql` (optional): Curated downstream models
+
+dbt basics:
+
+```bash
+cd xref_tables
+dbt run --select ext_tables   # create/refresh external tables
+dbt run --select stg_tables   # build staging tables that include timestamps
+dbt test                      # run tests
+```
+
+Configure your local dbt profile (`profiles.yml`) to point at the correct BigQuery project/dataset. The models reference `{{ target.project }}` and a dataset like `slv_xref`.
+
 ### Manual trigger test (ad hoc)
 To simulate a finalize event locally (for debugging only), you can call `xref_processor` with a mock CloudEvent in a REPL. Typically the unit tests already cover these flows.
 
