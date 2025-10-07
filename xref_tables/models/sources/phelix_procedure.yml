@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: slv_xref
+    tables:
+    - name: ext_phelix_procedure
+      description: "A cross-walk of Phelix procedure codes and their corresponding units."
+      columns:
+        - name: reason
+          description: "Contains the exam details. It usually includes: CPT Code (numeric identifier for the procedure), Exam Description (body part, technique, contrast info, etc.), Modality (appears after __, e.g., CT, MRI, US, XRAY)."
+        - name: scan_unit
+          description: "Numeric value indicating the unit count for the exam."
+        - name: note
+          description: "Any notes taken."

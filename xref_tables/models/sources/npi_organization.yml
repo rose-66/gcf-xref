@@ -1,0 +1,28 @@
+version: 2
+
+sources:
+  - name: slv_xref
+    tables:
+    - name: ext_npi_organization
+      description: "Details of the referring provider and affiliations with various organizations and practices."
+      columns:
+        - name: referring_provider_npi
+          description: "The National Provider Identifier, a unique 10-digit ID assigned to healthcare providers in the U.S.."
+        - name: referring_provider_name
+          description: "Full name of the referring healthcare provider (e.g., physician, nurse practitioner)."
+        - name: referring_provider_specialty
+          description: "The provider's medical specialty (e.g., Endocrinology, Internal Medicine, Nurse Practitioner)."
+        - name: referring_provider_primary_organization_parent_name
+          description: "The parent or umbrella organization under which the provider's primary practice operates (e.g., a health system)."
+        - name: referring_provider_primary_organization_name
+          description: "The specific organization or practice name the provider is affiliated with (e.g., a medical clinic)."
+        - name: referring_provider_primary_organization_type
+          description: "The type of organization (e.g., Clinic, Short-Term Acute Care Hospital)."
+        - name: provider_address
+          description: "Street address of the provider’s primary practice location."
+        - name: provider_city
+          description: "City where the provider’s primary practice is located."
+        - name: provider_zip_code
+          description: "5 digit ZIP code of the provider's location."
+        - name: provider_state
+          description: "State abbreviation of the provider's location."
