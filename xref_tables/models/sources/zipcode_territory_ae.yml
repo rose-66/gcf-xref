@@ -1,0 +1,22 @@
+version: 2 
+
+sources: 
+  - name: slv_xref 
+    tables: 
+      - name: ext_zipcode_territory_ae
+        description: "Names and contact numbers of the regional director, Account Executive, and site manager."
+        columns:
+          - name: regional_director
+            description: "Name of the regional director."
+          - name: regional_director_contact_number
+            description: "Phone number of the regional director."
+          - name: ae
+            description: "Name of the Account Executive."
+          - name: ae_contact_number
+            description: "Phone number of the Account Executive."
+          - name: primary_site
+            description: "Primary site location."
+          - name: site_manager
+            description: "Name of the site manager."
+          - name: site_manager_contact_number
+            description: "Phone number of the site manager."

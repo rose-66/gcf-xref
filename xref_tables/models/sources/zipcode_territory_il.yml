@@ -1,0 +1,24 @@
+
+version: 2 
+
+sources: 
+  - name: slv_xref 
+    tables: 
+    - name: ext_zipcode_territory_il  
+      description: "Zip code territory assignments for Illinois (IL)."
+      columns:
+        - name: zip_code
+          description: "5 digit code of the territory."
+        - name: ae
+          description: "Name of Accountant Executive."
+        - name: state_name
+          description: "State of the territory."
+        - name: county
+          description: "County of the territory."
+        - name: region
+          description: "Region of the territory."
+        - name: provider_count
+          description: "Count of the provider."
+        - name: sales_director
+          description: "Name of the sales director."
+

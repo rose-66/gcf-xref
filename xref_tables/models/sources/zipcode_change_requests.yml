@@ -1,0 +1,31 @@
+
+version: 2 
+
+sources: 
+  - name: slv_xref 
+    tables: 
+      - name: ext_zipcode_change_requests
+        description: "Change requests for zip code territory assignments."
+        columns:
+          - name: zip_code
+            description: "5 digit code of the territory."
+          - name: ae
+            description: "Name of the account executive."
+          - name: state_name
+            description: "State of the territory."
+          - name: county
+            description: "County of the territory."
+          - name: region
+            description: "Region of the territory."
+          - name: provider_count
+            description: "Number of providers in the territory."
+          - name: sales_director 
+            description: "Name of the sales director."
+          - name: added_to_master
+            description: "Indicates whether the change has been added to the master."
+          - name: added_to_map
+            description: "Indicates whether the change has been added to the map."
+          - name: added_to_baseline
+            description: "Indicates whether the change has been added to the baseline."
+          - name: added_to_trilliant 
+            description: "Indicates whether the change has been added to Trilliant."
