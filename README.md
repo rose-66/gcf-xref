@@ -124,9 +124,9 @@ These demonstrate the required shape and how to set `target_path`.
 
 The `xref_tables/` directory is a dbt project that models the external data into queryable tables.
 
-- `models/sources/*.yml`: Source definitions (table and column docs; optional freshness)
-- `models/raw_tables/*.sql`: External table DDLs (BigQuery `CREATE EXTERNAL TABLE` statements executed via dbt)
-- `models/stg_tables/*.sql`: Staging models that select from externals and add an ingestion timestamp column
+- `models/sources/*.yml`: Source definitions (table and column docs)
+- `models/raw_tables/*.sql`: External table creation from the ext-tables bucket
+- `models/stg_tables/*.sql`: Staging models that select from external tables and add an ingestion timestamp column
 - `models/tables/*.sql` (optional): Curated downstream models
 
 dbt basics:
