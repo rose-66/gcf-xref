@@ -1,0 +1,46 @@
+version: 2
+
+sources:
+  - name: dts_02
+    tables:
+    - name: ext_divvy
+      description: "Divvy bike data."
+      columns:
+        - name: "trip_id"
+          description: "Unique identifier for the trip."
+        - name: "start_time"
+          description: "Timestamp when the trip started."
+        - name: "stop_time"
+          description: "Timestamp when the trip ended."
+        - name: "bike_id"
+          description: "Unique identifier for the bike."
+        - name: "trip_duration"
+          description: "Duration of the trip in seconds."
+        - name: "from_station_id"
+          description: "Unique identifier for the station where the trip started."
+        - name: "from_station_name"
+          description: "Name of the station where the trip started."
+        - name: "to_station_id"
+          description: "Unique identifier for the station where the trip ended."
+        - name: "to_station_name"
+          description: "Name of the station where the trip ended."
+        - name: "user_type"
+          description: "Type of user."
+        - name: "gender"
+          description: "Gender of the user."
+        - name: "birth_year"
+          description: "Year of birth of the user."
+        - name: "from_latitude"
+          description: "Latitude of the station where the trip started."
+        - name: "from_longitude"
+          description: "Longitude of the station where the trip started."
+        - name: "from_location"
+          description: "Location of the station where the trip started."
+        - name: "to_latitude"
+          description: "Latitude of the station where the trip ended."
+        - name: "to_longitude"
+          description: "Longitude of the station where the trip ended."
+        - name: "to_location"
+          description: "Location of the station where the trip ended."
+              
+                

@@ -6,3 +6,7 @@ __pycache__/
 /xref_tables/target/
 /xref_tables/dbt_packages/
 /xref_tables/logs/
+/dts/dts_02/target/
+/dts/dts_02/dbt_packages/
+/dts/dts_02/logs/
+/dts/logs/
