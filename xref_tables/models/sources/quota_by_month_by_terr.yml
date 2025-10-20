@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: slv_xref 
     tables:
-    - name: ext_quota_terr
+    - name: ext_quota_by_month_by_terr
       description: "Monthly quotas for various imaging modalities, broken down by territory."
       columns:
         - name: new_territory_name
@@ -16,3 +16,121 @@ sources:
           description: "Name of the account executive"
         - name: quota_and_comp_notes
           description: "Notes taken for quota and Comp"
+        - name: mr_january
+          description: "95% quota for January in 21 business days."
+        - name: mr_february
+          description: "96% quota for February in 19 business days."
+        - name: mr_march
+          description: "97% quota for March in 21 business days."
+        - name: mr_april
+          description: "99% quota for April in 22 business days."
+        - name: mr_may
+          description: "100% quota for May in 21 business days."
+        - name: mr_june
+          description: "100% quota for June in 20 business days."
+        - name: mr_july
+          description: "101% quota for July in 22 business days."
+        - name: mr_august
+          description: "102% quota for August in 21 business days."
+        - name: mr_september
+          description: "103% quota for September in 21 business days."
+        - name: mr_october
+          description: "103% quota for October in 20 business days."
+        - name: mr_november
+          description: "103% quota for November in 18 business days."
+        - name: mr_december
+          description: "101% quota for December in 22 business days."
+        - name: mr_fy_25_quota
+          description: "Sum of all monthly quotas."
+        - name: mr_notes
+          description: "Any notes if there is no quota. This is empty for MR."
+        - name: pet_january
+          description: "95% quota for January in 21 business days."
+        - name: pet_february
+          description: "96% quota for February in 19 business days."
+        - name: pet_march
+          description: "97% quota for March in 21 business days."
+        - name: pet_april
+          description: "99% quota for April in 22 business days."
+        - name: pet_may
+          description: "100% quota for May in 21 business days."
+        - name: pet_june
+          description: "100% quota for June in 20 business days."
+        - name: pet_july
+          description: "101% quota for July in 22 business days."
+        - name: pet_august
+          description: "102% quota for August in 21 business days."
+        - name: pet_september
+          description: "103% quota for September in 21 business days."
+        - name: pet_october
+          description: "103% quota for October in 20 business days."
+        - name: pet_november
+          description: "103% quota for November in 18 business days."
+        - name: pet_december
+          description: "101% quota for December in 22 business days."
+        - name: pet_fy_25_quota
+          description: "Sum of all monthly quotas."
+        - name: pet_notes
+          description: "Any notes if there is no quota."
+        - name: pet_subtotal
+          description: "Total pet quota for each month."
+        - name: other_january
+          description: "95% quota for January in 21 business days."
+        - name: other_february
+          description: "96% quota for February in 19 business days."
+        - name: other_march
+          description: "97% quota for March in 21 business days."
+        - name: other_april
+          description: "99% quota for April in 22 business days."
+        - name: other_may
+          description: "100% quota for May in 21 business days."
+        - name: other_june
+          description: "100% quota for June in 20 business days."
+        - name: other_july
+          description: "101% quota for July in 22 business days."
+        - name: other_august
+          description: "102% quota for August in 21 business days."
+        - name: other_september
+          description: "103% quota for September in 21 business days."
+        - name: other_october
+          description: "103% quota for October in 20 business days."
+        - name: other_november
+          description: "103% quota for November in 18 business days."
+        - name: other_december
+          description: "101% quota for December in 22 business days."
+        - name: other_fy_25_quota
+          description: "Sum of all monthly quotas."
+        - name: other_notes
+          description: "Any notes if there is no quota."
+        - name: other_subtotal
+          description: "Total other quota for each month."
+        - name: misc_january
+          description: "95% quota for January in 21 business days."
+        - name: misc_february
+          description: "96% quota for February in 19 business days."
+        - name: misc_march
+          description: "97% quota for March in 21 business days."
+        - name: misc_april
+          description: "99% quota for April in 22 business days."
+        - name: misc_may
+          description: "100% quota for May in 21 business days."
+        - name: misc_june
+          description: "100% quota for June in 20 business days."
+        - name: misc_july
+          description: "101% quota for July in 22 business days."
+        - name: misc_august
+          description: "102% quota for August in 21 business days."
+        - name: misc_september
+          description: "103% quota for September in 21 business days."
+        - name: misc_october
+          description: "103% quota for October in 20 business days."
+        - name: misc_november
+          description: "103% quota for November in 18 business days."
+        - name: misc_december
+          description: "101% quota for December in 22 business days."
+        - name: misc_fy_25_quota
+          description: "Sum of all monthly quotas."
+        - name: misc_notes
+          description: "Any notes if there is no quota."
+        - name: misc_subtotal
+          description: "Total misc quota for each month."

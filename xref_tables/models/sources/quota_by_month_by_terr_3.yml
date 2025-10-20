@@ -1,0 +1,18 @@
+version: 2
+
+sources:
+  - name: slv_xref 
+    tables:
+    - name: ext_quota_terr
+      description: "Monthly quotas for various imaging modalities, broken down by territory."
+      columns:
+        - name: new_territory_name
+          description: "Name of the territory" 
+        - name: region
+          description: "Geographic area" 
+        - name: manager
+          description: "Name of the regional manager"
+        - name: ae 
+          description: "Name of the account executive"
+        - name: quota_and_comp_notes
+          description: "Notes taken for quota and Comp"
