@@ -4,24 +4,56 @@
 # CONFIGURATION SECTION
 # ============================================================================== 
 
-# Define the datasets to be copied, formatted as:
-# SOURCE_PROJECT:SOURCE_DATASET:DEST_PROJECT:DEST_DATASET
+# Environment Configuration
+# Usage: ./bq_transfer.sh [dev|uat]
+# Set to 'dev' or 'uat' to control project selection and redaction behavior
+ENVIRONMENT="${1:-${BQ_ENVIRONMENT:-dev}}"
+
+# Dynamic project selection based on environment
+case "$ENVIRONMENT" in
+    "dev")
+        SOURCE_PROJECT="${BQ_DEV_SOURCE_PROJECT:-sbox-rgodoy-001-20251124}"
+        DEST_PROJECT="${BQ_DEV_DEST_PROJECT:-sbox-rgodoy-002-20251008}"
+        DATASET_MAPPING="dts_01:dev_dts"
+        ;;
+    "uat")
+        SOURCE_PROJECT="${BQ_UAT_SOURCE_PROJECT:-sbox-rgodoy-001-20251124}"
+        DEST_PROJECT="${BQ_UAT_DEST_PROJECT:-sbox-rgodoy-002-20251008}"
+        DATASET_MAPPING="dts_01:uat_dts"
+        ;;
+    *)
+        echo "ERROR: Unknown environment '$ENVIRONMENT'. Must be 'dev' or 'uat'."
+        echo "Usage: ./bq_transfer.sh [dev|uat]"
+        echo "Or set BQ_ENVIRONMENT environment variable"
+        exit 1
+        ;;
+esac
+
+# Build dataset configuration dynamically
+IFS=':' read -r SRC_DATASET DEST_DATASET <<< "$DATASET_MAPPING"
 DATASETS_TO_COPY=(
-    "sbox-rgodoy-001-20251124:dts_01:sbox-rgodoy-002-20251008:dts_01_2"
+    "$SOURCE_PROJECT:$SRC_DATASET:$DEST_PROJECT:$DEST_DATASET"
 )
 
-# This is the service account key for the destination project
-# Can be set via environment variable: export BQ_AUTH_KEYFILE="/path/to/keyfile.json"
-# Or specify the path directly below
-AUTH_KEYFILE="${BQ_AUTH_KEYFILE:-/Users/rosemarie/Downloads/sbox-rgodoy-002-20251008-58246c009c2c.json}"
+# Service account keyfile selection based on environment
+case "$ENVIRONMENT" in
+    "dev")
+        AUTH_KEYFILE="${BQ_AUTH_KEYFILE_DEV:-${BQ_AUTH_KEYFILE:-/Users/rosemarie/Downloads/sbox-rgodoy-002-20251008-58246c009c2c.json}}"
+        ;;
+    "uat")
+        AUTH_KEYFILE="${BQ_AUTH_KEYFILE_UAT:-${BQ_AUTH_KEYFILE:-/Users/rosemarie/Downloads/sbox-rgodoy-002-20251008-58246c009c2c.json}}"
+        ;;
+esac
 
 # Default BigQuery location for destination jobs/datasets
 DEFAULT_LOCATION="us-central1"
 
-# Define sensitive columns and remediation tactics.
+# Define sensitive columns and remediation tactics by environment
 # Format: DATASET:TABLE.COLUMN.TACTIC
-# TACTICS: 'redact' (set to NULL), 'FF' (FARM_FINGERPRINT)
-SENSITIVE_TABLE_COLUMNS=(
+# TACTICS: 'redact' (set to NULL), 'FF' (FARM_FINGERPRINT), 'mask' (partial masking), 'hash' (SHA256 hash)
+
+# Development Environment - Full redaction for testing
+SENSITIVE_TABLE_COLUMNS_DEV=(
     # Business Licenses - redact sensitive columns
     "dts_01:stg_business_licenses.account_number.redact"
     "dts_01:stg_business_licenses.business_address.redact"
@@ -35,6 +67,38 @@ SENSITIVE_TABLE_COLUMNS=(
     "dts_01:stg_crimes.longitude.redact"
     "dts_01:stg_crimes.location_description.redact"
 )
+
+# UAT Environment - Minimal redaction, mostly masking
+SENSITIVE_TABLE_COLUMNS_UAT=(
+    # Business Licenses - use appropriate tactics for data types
+    "dts_01:stg_business_licenses.account_number.FF"  # Use FF for numeric columns
+    "dts_01:stg_business_licenses.business_address.mask"  # String masking for text
+    "dts_01:stg_business_licenses.community_area.redact"
+    "dts_01:stg_business_licenses.payment_date.redact"
+    
+    # Crimes - use FF for numeric coordinates (preserves uniqueness for analysis)
+    "dts_01:stg_crimes.x_coordinate.FF"
+    "dts_01:stg_crimes.y_coordinate.FF"
+    "dts_01:stg_crimes.latitude.FF"
+    "dts_01:stg_crimes.longitude.FF"
+    "dts_01:stg_crimes.location_description.mask"
+)
+
+# Select appropriate configuration based on environment
+case "$ENVIRONMENT" in
+    "dev")
+        SENSITIVE_TABLE_COLUMNS=("${SENSITIVE_TABLE_COLUMNS_DEV[@]}")
+        echo "Using DEV environment configuration (full redaction)"
+        ;;
+    "uat")
+        SENSITIVE_TABLE_COLUMNS=("${SENSITIVE_TABLE_COLUMNS_UAT[@]}")
+        echo "Using UAT environment configuration (minimal redaction)"
+        ;;
+    *)
+        echo "WARNING: Unknown environment '$ENVIRONMENT'. Using DEV configuration."
+        SENSITIVE_TABLE_COLUMNS=("${SENSITIVE_TABLE_COLUMNS_DEV[@]}")
+        ;;
+esac
 
 # ==============================================================================
 # TEMPLATED SQL STATEMENTS
@@ -54,6 +118,24 @@ SET {COLUMN_NAME} = FARM_FINGERPRINT(CAST(T.{COLUMN_NAME} AS STRING))
 WHERE TRUE;
 "
 
+# SQL template for MASK (partial masking)
+SQL_MASK_TEMPLATE="
+UPDATE \`{FULL_TABLE_NAME}\`
+SET {COLUMN_NAME} = CASE 
+    WHEN LENGTH(CAST({COLUMN_NAME} AS STRING)) > 4 THEN 
+        CONCAT('****', SUBSTR(CAST({COLUMN_NAME} AS STRING), -4))
+    ELSE '****'
+END
+WHERE {COLUMN_NAME} IS NOT NULL;
+"
+
+# SQL template for HASH (SHA256 hash)
+SQL_HASH_TEMPLATE="
+UPDATE \`{FULL_TABLE_NAME}\`
+SET {COLUMN_NAME} = TO_HEX(SHA256(CAST({COLUMN_NAME} AS BYTES)))
+WHERE {COLUMN_NAME} IS NOT NULL;
+"
+
 # ==============================================================================
 # FUNCTIONS
 # ==============================================================================
@@ -62,19 +144,20 @@ WHERE TRUE;
 validate_auth_keyfile() {
     if [[ ! -f "$AUTH_KEYFILE" ]]; then
         echo "ERROR: Auth keyfile not found: $AUTH_KEYFILE"
-        echo "Set BQ_AUTH_KEYFILE environment variable or check file path"
+        echo "Set BQ_AUTH_KEYFILE_${ENVIRONMENT^^} environment variable or check file path"
         exit 1
     fi
     
-    # Test authentication with a simple query using the destination project from first dataset
-    local test_project="sbox-rgodoy-002-20251008"  # Use known working project
-    if ! bq --credential_file="$AUTH_KEYFILE" --project_id="$test_project" query --use_legacy_sql=false --dry_run "SELECT 1" > /dev/null 2>&1; then
-        echo "ERROR: Auth keyfile is invalid or expired"
+    # Test authentication with a simple query using the destination project
+    if ! bq --credential_file="$AUTH_KEYFILE" --project_id="$DEST_PROJECT" query --use_legacy_sql=false --dry_run "SELECT 1" > /dev/null 2>&1; then
+        echo "ERROR: Auth keyfile is invalid or expired for project $DEST_PROJECT"
         echo "Please check the keyfile path and permissions"
         exit 1
     fi
     
-    echo "Authentication validated successfully"
+    echo "Authentication validated successfully for $ENVIRONMENT environment"
+    echo "Source Project: $SOURCE_PROJECT"
+    echo "Destination Project: $DEST_PROJECT"
 }
 
 # Function to execute a templated SQL statement
@@ -95,6 +178,10 @@ execute_sql() {
         sql_statement="UPDATE \`$sql_fqn\` SET $column_name = NULL WHERE TRUE;"
     elif [[ "$tactic" == "FF" ]]; then
         sql_statement="UPDATE \`$sql_fqn\` T SET $column_name = FARM_FINGERPRINT(CAST(T.$column_name AS STRING)) WHERE TRUE;"
+    elif [[ "$tactic" == "mask" ]]; then
+        sql_statement="UPDATE \`$sql_fqn\` SET $column_name = CASE WHEN LENGTH(CAST($column_name AS STRING)) > 4 THEN CONCAT('****', SUBSTR(CAST($column_name AS STRING), -4)) ELSE '****' END WHERE $column_name IS NOT NULL;"
+    elif [[ "$tactic" == "hash" ]]; then
+        sql_statement="UPDATE \`$sql_fqn\` SET $column_name = TO_HEX(SHA256(CAST($column_name AS BYTES))) WHERE $column_name IS NOT NULL;"
     else
         echo "  -> ERROR: Unknown tactic '$tactic'. Skipping."
         return 1
@@ -122,8 +209,15 @@ execute_sql() {
 # MAIN LOGIC
 # ============================================================================== 
 
-echo "Starting BigQuery Data Transfer and Remediation Process..."
+echo "=========================================="
+echo "BIGQUERY DATA TRANSFER AND REMEDIATION"
+echo "=========================================="
+echo "Environment: $ENVIRONMENT"
+echo "Source Project: $SOURCE_PROJECT"
+echo "Destination Project: $DEST_PROJECT"
+echo "Dataset Mapping: $DATASET_MAPPING"
 echo "Using service account credentials from $AUTH_KEYFILE"
+echo "=========================================="
 
 # Validate authentication before proceeding
 validate_auth_keyfile

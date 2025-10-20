@@ -13,13 +13,55 @@ set -e  # Exit on any error
 # CONFIGURATION
 # ==============================================================================
 
-# Test configuration
-TEST_PROJECT_01="sbox-rgodoy-001-20251124"
-TEST_PROJECT_02="sbox-rgodoy-002-20251008"
-TEST_DATASET_01="dts_01"
-TEST_DATASET_02="dts_01_2"
-# Can be set via environment variable: export BQ_AUTH_KEYFILE="/path/to/keyfile.json"
-AUTH_KEYFILE="${BQ_AUTH_KEYFILE:-/Users/rosemarie/Downloads/sbox-rgodoy-002-20251008-58246c009c2c.json}"
+# Environment configuration for testing
+# Usage: ./test_bq_transfer.sh [dev|uat]
+TEST_ENVIRONMENT="${1:-${BQ_ENVIRONMENT:-dev}}"
+
+# Load project configuration from bq_transfer.sh
+# This ensures we test with the same configuration that will be used
+if [[ -f "bq_transfer.sh" ]]; then
+    # Extract project information based on environment
+    case "$TEST_ENVIRONMENT" in
+        "dev")
+            TEST_PROJECT_01="${BQ_DEV_SOURCE_PROJECT:-sbox-rgodoy-001-20251124}"
+            TEST_PROJECT_02="${BQ_DEV_DEST_PROJECT:-sbox-rgodoy-002-20251008}"
+            ;;
+        "uat")
+            TEST_PROJECT_01="${BQ_UAT_SOURCE_PROJECT:-sbox-rgodoy-001-20251124}"
+            TEST_PROJECT_02="${BQ_UAT_DEST_PROJECT:-sbox-rgodoy-002-20251008}"
+            ;;
+        *)
+            echo "ERROR: Unknown environment '$TEST_ENVIRONMENT'. Must be 'dev' or 'uat'."
+            exit 1
+            ;;
+    esac
+else
+    echo "ERROR: bq_transfer.sh not found. Cannot load project configuration."
+    exit 1
+fi
+
+# Dataset configuration
+# For testing: different destination datasets per environment
+case "$TEST_ENVIRONMENT" in
+    "dev")
+        TEST_DATASET_01="dts_01"
+        TEST_DATASET_02="dev_dts"
+        ;;
+    "uat")
+        TEST_DATASET_01="dts_01"
+        TEST_DATASET_02="uat_dts"
+        ;;
+esac
+
+# Service account keyfile selection based on environment
+case "$TEST_ENVIRONMENT" in
+    "dev")
+        AUTH_KEYFILE="${BQ_AUTH_KEYFILE_DEV:-${BQ_AUTH_KEYFILE:-/Users/rosemarie/Downloads/sbox-rgodoy-002-20251008-58246c009c2c.json}}"
+        ;;
+    "uat")
+        AUTH_KEYFILE="${BQ_AUTH_KEYFILE_UAT:-${BQ_AUTH_KEYFILE:-/Users/rosemarie/Downloads/sbox-rgodoy-002-20251008-58246c009c2c.json}}"
+        ;;
+esac
 
 # Test tables to validate
 TEST_TABLES=(
@@ -27,18 +69,44 @@ TEST_TABLES=(
     "stg_crimes"
 )
 
-# Sensitive columns to test remediation
-SENSITIVE_COLUMNS=(
-    "stg_business_licenses:account_number"
-    "stg_business_licenses:business_address"
-    "stg_business_licenses:community_area"
-    "stg_business_licenses:payment_date"
-    "stg_crimes:x_coordinate"
-    "stg_crimes:y_coordinate"
-    "stg_crimes:latitude"
-    "stg_crimes:longitude"
-    "stg_crimes:location_description"
+# Sensitive columns to test remediation (environment-specific)
+SENSITIVE_COLUMNS_DEV=(
+    "stg_business_licenses:account_number:redact"
+    "stg_business_licenses:business_address:redact"
+    "stg_business_licenses:community_area:redact"
+    "stg_business_licenses:payment_date:redact"
+    "stg_crimes:x_coordinate:redact"
+    "stg_crimes:y_coordinate:redact"
+    "stg_crimes:latitude:redact"
+    "stg_crimes:longitude:redact"
+    "stg_crimes:location_description:redact"
 )
+
+SENSITIVE_COLUMNS_UAT=(
+    "stg_business_licenses:account_number:FF"
+    "stg_business_licenses:business_address:mask"
+    "stg_business_licenses:community_area:redact"
+    "stg_business_licenses:payment_date:redact"
+    "stg_crimes:x_coordinate:FF"
+    "stg_crimes:y_coordinate:FF"
+    "stg_crimes:latitude:FF"
+    "stg_crimes:longitude:FF"
+    "stg_crimes:location_description:mask"
+)
+
+# Select appropriate configuration based on environment
+case "$TEST_ENVIRONMENT" in
+    "dev")
+        SENSITIVE_COLUMNS=("${SENSITIVE_COLUMNS_DEV[@]}")
+        ;;
+    "uat")
+        SENSITIVE_COLUMNS=("${SENSITIVE_COLUMNS_UAT[@]}")
+        ;;
+    *)
+        echo "WARNING: Unknown environment '$TEST_ENVIRONMENT'. Using DEV configuration."
+        SENSITIVE_COLUMNS=("${SENSITIVE_COLUMNS_DEV[@]}")
+        ;;
+esac
 
 # Colors for output
 RED='\033[0;31m'
@@ -107,8 +175,61 @@ test_authentication() {
     fi
 }
 
+test_environment_configuration() {
+    print_header "Testing Environment Configuration"
+    
+    # Step 1: Validate environment variable
+    print_info "Step 1: Validating environment configuration..."
+    print_info "Environment: $TEST_ENVIRONMENT"
+    
+    if [[ -z "$TEST_ENVIRONMENT" ]]; then
+        print_error "Environment not set. Use BQ_ENVIRONMENT environment variable."
+        return 1
+    fi
+    
+    # Step 2: Validate environment value
+    case "$TEST_ENVIRONMENT" in
+        "dev"|"uat"|"prod")
+            print_success "Valid environment: $TEST_ENVIRONMENT"
+            ;;
+        *)
+            print_error "Invalid environment: $TEST_ENVIRONMENT. Must be 'dev', 'uat', or 'prod'."
+            return 1
+            ;;
+    esac
+    
+    # Step 3: Display configuration summary
+    print_info "Step 2: Configuration summary..."
+    print_info "Sensitive columns configured: ${#SENSITIVE_COLUMNS[@]}"
+    
+    # Step 4: Show tactics being used
+    print_info "Step 3: Tactics being used..."
+    local tactics_used=()
+    for column_info in "${SENSITIVE_COLUMNS[@]}"; do
+        IFS=':' read -r table column tactic <<< "$column_info"
+        tactics_used+=("$tactic")
+    done
+    
+    # Count unique tactics
+    local unique_tactics=($(printf '%s\n' "${tactics_used[@]}" | sort -u))
+    print_info "Unique tactics: ${unique_tactics[*]}"
+    
+    # Step 5: Validate tactics
+    print_info "Step 4: Validating tactics..."
+    local valid_tactics=("redact" "mask" "hash" "FF")
+    for tactic in "${unique_tactics[@]}"; do
+        if [[ " ${valid_tactics[@]} " =~ " ${tactic} " ]]; then
+            print_success "Valid tactic: $tactic"
+        else
+            print_error "Invalid tactic: $tactic"
+            return 1
+        fi
+    done
+    
+    print_success "Environment configuration validation passed"
+}
+
 test_dataset_existence() {
-    print_header "Testing Dataset Existence"
     
     # Step 1: Verify source dataset exists in project 01
     print_info "Step 1: Checking source dataset exists..."
@@ -191,11 +312,16 @@ test_table_data_counts() {
 test_sensitive_data_detection() {
     print_header "Testing Sensitive Data Detection"
     
-    # Step 1: Check each sensitive column for non-null values that need remediation
-    print_info "Step 1: Analyzing sensitive data in each column..."
+    # Step 1: Display environment configuration
+    print_info "Step 1: Environment configuration..."
+    print_info "Testing environment: $TEST_ENVIRONMENT"
+    print_info "Sensitive columns configured: ${#SENSITIVE_COLUMNS[@]}"
+    
+    # Step 2: Check each sensitive column for non-null values that need remediation
+    print_info "Step 2: Analyzing sensitive data in each column..."
     for column_info in "${SENSITIVE_COLUMNS[@]}"; do
-        IFS=':' read -r table column <<< "$column_info"
-        print_info "Checking sensitive data in: $table.$column"
+        IFS=':' read -r table column tactic <<< "$column_info"
+        print_info "Checking sensitive data in: $table.$column (tactic: $tactic)"
         
         # Count non-null values in sensitive columns
         local non_null_count
@@ -203,7 +329,7 @@ test_sensitive_data_detection() {
         
         if [[ "$non_null_count" =~ ^[0-9]+$ ]]; then
             if [[ "$non_null_count" -gt 0 ]]; then
-                print_warning "Found $non_null_count non-null values in sensitive column $table.$column"
+                print_warning "Found $non_null_count non-null values in sensitive column $table.$column (will apply $tactic)"
             else
                 print_info "No sensitive data found in $table.$column (already redacted)"
             fi
@@ -217,32 +343,53 @@ test_sensitive_data_detection() {
 test_remediation_sql_generation() {
     print_header "Testing Remediation SQL Generation"
     
-    # Step 1: Test SQL generation for redact tactic
-    print_info "Step 1: Testing SQL generation for redact tactic..."
+    # Step 1: Test SQL generation for all tactics
+    print_info "Step 1: Testing SQL generation for all tactics..."
     local test_table="sbox-rgodoy-002-20251008:dts_01_2.stg_business_licenses"
     local test_column="account_number"
-    local test_tactic="redact"
-    
-    print_info "Testing SQL generation for: $test_table.$test_column ($test_tactic)"
     
     # Convert colon-qualified name to dot-qualified
     local sql_fqn
     sql_fqn=$(echo "$test_table" | sed 's/:/./')
     
-    # Build SQL statement
-    local sql_statement=""
-    if [[ "$test_tactic" == "redact" ]]; then
-        sql_statement="UPDATE \`$sql_fqn\` SET $test_column = NULL WHERE TRUE;"
-    fi
+    # Test all tactics
+    local tactics=("redact" "mask" "hash" "FF")
+    local tactic_names=("Redact" "Mask" "Hash" "Farm Fingerprint")
     
-    print_info "Generated SQL: $sql_statement"
+    for i in "${!tactics[@]}"; do
+        local tactic="${tactics[$i]}"
+        local tactic_name="${tactic_names[$i]}"
+        
+        print_info "Testing $tactic_name tactic..."
+        
+        # Build SQL statement based on tactic
+        local sql_statement=""
+        case "$tactic" in
+            "redact")
+                sql_statement="UPDATE \`$sql_fqn\` SET $test_column = NULL WHERE TRUE;"
+                ;;
+            "mask")
+                sql_statement="UPDATE \`$sql_fqn\` SET $test_column = CASE WHEN LENGTH(CAST($test_column AS STRING)) > 4 THEN CONCAT('****', SUBSTR(CAST($test_column AS STRING), -4)) ELSE '****' END WHERE $test_column IS NOT NULL;"
+                ;;
+            "hash")
+                sql_statement="UPDATE \`$sql_fqn\` SET $test_column = TO_HEX(SHA256(CAST($test_column AS BYTES))) WHERE $test_column IS NOT NULL;"
+                ;;
+            "FF")
+                sql_statement="UPDATE \`$sql_fqn\` T SET $test_column = FARM_FINGERPRINT(CAST(T.$test_column AS STRING)) WHERE TRUE;"
+                ;;
+        esac
+        
+        print_info "Generated SQL for $tactic_name: $sql_statement"
+        
+        if [[ -n "$sql_statement" ]]; then
+            print_success "$tactic_name SQL generation test passed"
+        else
+            print_error "$tactic_name SQL generation test failed"
+            return 1
+        fi
+    done
     
-    if [[ -n "$sql_statement" ]]; then
-        print_success "SQL generation test passed"
-    else
-        print_error "SQL generation test failed"
-        return 1
-    fi
+    print_success "All SQL generation tests passed"
 }
 
 test_copy_command_availability() {
@@ -300,23 +447,29 @@ test_permissions() {
 main() {
     print_header "BigQuery Transfer Test Suite"
     print_info "Starting comprehensive test of bq_transfer.sh functionality..."
-    print_info "This test suite validates 9 key areas before running the data transfer."
+    print_info "This test suite validates 10 key areas before running the data transfer."
+    echo
+    print_info "Environment: $TEST_ENVIRONMENT"
+    print_info "Source Project: $TEST_PROJECT_01"
+    print_info "Destination Project: $TEST_PROJECT_02"
+    print_info "Auth Keyfile: $AUTH_KEYFILE"
     echo
     
     local test_results=()
     local failed_tests=0
     
-    # Run all tests - 9 comprehensive validation steps
+    # Run all tests - 10 comprehensive validation steps
     tests=(
         "test_authentication"           # Step 1: Authentication validation
-        "test_dataset_existence"       # Step 2: Dataset existence check
-        "test_table_existence"         # Step 3: Table existence validation
-        "test_table_schemas"           # Step 4: Schema analysis
-        "test_table_data_counts"       # Step 5: Data count verification
-        "test_sensitive_data_detection" # Step 6: Sensitive data analysis
-        "test_remediation_sql_generation" # Step 7: SQL generation testing
-        "test_copy_command_availability" # Step 8: Copy command validation
-        "test_permissions"            # Step 9: Permission verification
+        "test_environment_configuration" # Step 2: Environment configuration validation
+        "test_dataset_existence"       # Step 3: Dataset existence check
+        "test_table_existence"         # Step 4: Table existence validation
+        "test_table_schemas"           # Step 5: Schema analysis
+        "test_table_data_counts"       # Step 6: Data count verification
+        "test_sensitive_data_detection" # Step 7: Sensitive data analysis
+        "test_remediation_sql_generation" # Step 8: SQL generation testing
+        "test_copy_command_availability" # Step 9: Copy command validation
+        "test_permissions"            # Step 10: Permission verification
     )
     
     local step_number=1
@@ -344,7 +497,7 @@ main() {
     if [[ $failed_tests -eq 0 ]]; then
         print_success "🎉 All tests passed! The bq_transfer.sh script is ready to run."
         echo
-        print_info "You can now safely run: ./bq_transfer.sh"
+        print_info "You can now safely run: ./bq_transfer.sh $TEST_ENVIRONMENT"
     else
         print_error "❌ $failed_tests test(s) failed. Please fix the issues before running bq_transfer.sh"
         echo

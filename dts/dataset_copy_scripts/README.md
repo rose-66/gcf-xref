@@ -2,13 +2,28 @@
 
 ## **Overview**
 
-Scripts for securely transferring BigQuery datasets between projects with automatic sensitive data remediation. Includes comprehensive testing to ensure successful transfers.
+Scripts for securely transferring BigQuery datasets between projects with automatic sensitive data remediation. Supports multiple environments (dev, uat) with environment-specific redaction levels.
 
 ## **Files**
 
 - **`bq_transfer.sh`** - Main transfer script with automatic remediation
-- **`test_bq_transfer.sh`** - Comprehensive test suite (9 validation steps)
+- **`test_bq_transfer.sh`** - Comprehensive test suite (10 validation steps)
 - **`README.md`** - This documentation
+
+## **Multi-Environment Support**
+
+### **Environment Configuration**
+The scripts support two environments with different redaction levels:
+
+| Environment | Usage | Dataset | Redaction Level |
+|-------------|-------|---------|-----------------|
+| **DEV** | `./bq_transfer.sh dev` | `dev_dts` | Full redaction (all → NULL) |
+| **UAT** | `./bq_transfer.sh uat` | `uat_dts` | Minimal redaction (FF/mask) |
+
+### **Current Project Setup**
+All environments currently use the same projects for testing:
+- **Source:** `sbox-rgodoy-001-20251124`
+- **Destination:** `sbox-rgodoy-002-20251008`
 
 ## **Infrastructure Requirements**
 
@@ -45,34 +60,44 @@ Scripts for securely transferring BigQuery datasets between projects with automa
 export BQ_AUTH_KEYFILE="/path/to/your/service-account-key.json"
 ```
 
-### **2. Configure Datasets**
-Edit `DATASETS_TO_COPY` in `bq_transfer.sh`:
+### **2. Run Tests & Transfer**
+
+**Development Environment:**
 ```bash
-DATASETS_TO_COPY=(
-    "SOURCE_PROJECT:SOURCE_DATASET:DEST_PROJECT:DEST_DATASET"
-)
+./test_bq_transfer.sh dev
+./bq_transfer.sh dev
 ```
 
-### **3. Configure Sensitive Columns**
-Edit `SENSITIVE_TABLE_COLUMNS` in `bq_transfer.sh`
-
-### **4. Run Tests & Transfer**
+**UAT Environment:**
 ```bash
-./test_bq_transfer.sh  # Validate everything first
-./bq_transfer.sh       # Execute transfer
+./test_bq_transfer.sh uat
+./bq_transfer.sh uat
 ```
 
-## **Test Suite (9 Steps)**
+### **3. Redaction Tactics**
+
+**Available Tactics:**
+- `redact` - Set column value to NULL (full redaction)
+- `mask` - Partial masking (shows last 4 characters for strings)
+- `FF` - FARM_FINGERPRINT hash (preserves uniqueness for numeric data)
+- `hash` - SHA256 hash (preserves uniqueness for analysis)
+
+**Environment-Specific Behavior:**
+- **DEV:** Full redaction for testing (all sensitive data → NULL)
+- **UAT:** Minimal redaction (numeric data → FF hash, strings → mask)
+
+## **Test Suite (10 Steps)**
 
 1. **Authentication Validation** - Verifies keyfile and project access
-2. **Dataset Existence** - Confirms source and destination datasets
-3. **Table Existence** - Validates required tables exist
-4. **Schema Analysis** - Extracts and validates table schemas
-5. **Data Counts** - Confirms data exists for transfer
-6. **Sensitive Data Detection** - Analyzes columns requiring remediation
-7. **SQL Generation** - Tests remediation query syntax
-8. **Copy Command Validation** - Verifies bq copy availability
-9. **Permission Verification** - Confirms required BigQuery roles
+2. **Environment Configuration** - Validates environment and tactics
+3. **Dataset Existence** - Confirms source and destination datasets
+4. **Table Existence** - Validates required tables exist
+5. **Schema Analysis** - Extracts and validates table schemas
+6. **Data Counts** - Confirms data exists for transfer
+7. **Sensitive Data Detection** - Analyzes columns requiring remediation
+8. **SQL Generation** - Tests remediation query syntax for all tactics
+9. **Copy Command Validation** - Verifies bq copy availability
+10. **Permission Verification** - Confirms required BigQuery roles
 
 ## **Transfer Process**
 
@@ -83,12 +108,20 @@ Edit `SENSITIVE_TABLE_COLUMNS` in `bq_transfer.sh`
 
 ## **Workflow**
 
-1. **Configure** datasets and sensitive columns
-2. **Set** authentication (environment variable)
-3. **Run** test suite: `./test_bq_transfer.sh`
-4. **Review** test results and fix any issues
-5. **Execute** transfer: `./bq_transfer.sh`
-6. **Verify** data in destination project
+1. **Choose Environment** - Select dev or uat
+2. **Run Tests** - `./test_bq_transfer.sh [environment]`
+3. **Review Results** - Fix any issues found
+4. **Execute Transfer** - `./bq_transfer.sh [environment]`
+5. **Verify Data** - Check destination dataset
+
+**Example:**
+```bash
+# Test UAT environment
+./test_bq_transfer.sh uat
+
+# If tests pass, run transfer
+./bq_transfer.sh uat
+```
 
 ## **Required Permissions**
 
@@ -130,4 +163,3 @@ Edit `SENSITIVE_TABLE_COLUMNS` in `bq_transfer.sh`
 - Verify column names exist
 - Check SQL syntax
 - Confirm destination table permissions
-
