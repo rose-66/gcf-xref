@@ -18,7 +18,7 @@ The scripts support two environments with different redaction levels:
 | Environment | Usage | Dataset | Redaction Level |
 |-------------|-------|---------|-----------------|
 | **DEV** | `./bq_transfer.sh dev` | `dev_dts` | Full redaction (all → NULL) |
-| **UAT** | `./bq_transfer.sh uat` | `uat_dts` | Minimal redaction (FF/mask) |
+| **UAT** | `./bq_transfer.sh uat` | `uat_dts` | No redaction (original data) |
 
 ### **Current Project Setup**
 All environments currently use the same projects for testing:
@@ -84,7 +84,7 @@ export BQ_AUTH_KEYFILE="/path/to/your/service-account-key.json"
 
 **Environment-Specific Behavior:**
 - **DEV:** Full redaction for testing (all sensitive data → NULL)
-- **UAT:** Minimal redaction (numeric data → FF hash, strings → mask)
+- **UAT:** No redaction (original data preserved for analysis)
 
 ## **Test Suite (10 Steps)**
 

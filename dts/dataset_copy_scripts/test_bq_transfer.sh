@@ -82,25 +82,13 @@ SENSITIVE_COLUMNS_DEV=(
     "stg_crimes:location_description:redact"
 )
 
-SENSITIVE_COLUMNS_UAT=(
-    "stg_business_licenses:account_number:FF"
-    "stg_business_licenses:business_address:mask"
-    "stg_business_licenses:community_area:redact"
-    "stg_business_licenses:payment_date:redact"
-    "stg_crimes:x_coordinate:FF"
-    "stg_crimes:y_coordinate:FF"
-    "stg_crimes:latitude:FF"
-    "stg_crimes:longitude:FF"
-    "stg_crimes:location_description:mask"
-)
-
 # Select appropriate configuration based on environment
 case "$TEST_ENVIRONMENT" in
     "dev")
         SENSITIVE_COLUMNS=("${SENSITIVE_COLUMNS_DEV[@]}")
         ;;
     "uat")
-        SENSITIVE_COLUMNS=("${SENSITIVE_COLUMNS_UAT[@]}")
+        SENSITIVE_COLUMNS=()
         ;;
     *)
         echo "WARNING: Unknown environment '$TEST_ENVIRONMENT'. Using DEV configuration."

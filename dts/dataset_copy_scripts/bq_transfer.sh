@@ -68,22 +68,6 @@ SENSITIVE_TABLE_COLUMNS_DEV=(
     "dts_01:stg_crimes.location_description.redact"
 )
 
-# UAT Environment - Minimal redaction, mostly masking
-SENSITIVE_TABLE_COLUMNS_UAT=(
-    # Business Licenses - use appropriate tactics for data types
-    "dts_01:stg_business_licenses.account_number.FF"  # Use FF for numeric columns
-    "dts_01:stg_business_licenses.business_address.mask"  # String masking for text
-    "dts_01:stg_business_licenses.community_area.redact"
-    "dts_01:stg_business_licenses.payment_date.redact"
-    
-    # Crimes - use FF for numeric coordinates (preserves uniqueness for analysis)
-    "dts_01:stg_crimes.x_coordinate.FF"
-    "dts_01:stg_crimes.y_coordinate.FF"
-    "dts_01:stg_crimes.latitude.FF"
-    "dts_01:stg_crimes.longitude.FF"
-    "dts_01:stg_crimes.location_description.mask"
-)
-
 # Select appropriate configuration based on environment
 case "$ENVIRONMENT" in
     "dev")
@@ -91,8 +75,8 @@ case "$ENVIRONMENT" in
         echo "Using DEV environment configuration (full redaction)"
         ;;
     "uat")
-        SENSITIVE_TABLE_COLUMNS=("${SENSITIVE_TABLE_COLUMNS_UAT[@]}")
-        echo "Using UAT environment configuration (minimal redaction)"
+        SENSITIVE_TABLE_COLUMNS=()
+        echo "Using UAT environment configuration (no redaction)"
         ;;
     *)
         echo "WARNING: Unknown environment '$ENVIRONMENT'. Using DEV configuration."
