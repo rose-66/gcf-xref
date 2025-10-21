@@ -4,8 +4,6 @@
 # BigQuery Transfer Script Test Suite
 # ==============================================================================
 # This script tests the bq_transfer.sh functionality before running the actual transfer
-# Author: AI Assistant
-# Date: $(date)
 
 set -e  # Exit on any error
 
