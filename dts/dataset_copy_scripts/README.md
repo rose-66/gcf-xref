@@ -1,165 +1,170 @@
-# BigQuery Dataset Transfer & Remediation Scripts
+# BigQuery Dataset Transfer & Remediation Pipeline
 
 ## **Overview**
 
-Scripts for securely transferring BigQuery datasets between projects with automatic sensitive data remediation. Supports multiple environments (dev, uat) with environment-specific redaction levels.
+**Cloud Run-based serverless service** for securely transferring BigQuery datasets between projects with automatic sensitive data remediation. Deployed as a containerized Python/Flask application on Google Cloud Run, supporting multiple environments (dev, uat) with environment-specific redaction levels.
+
+### **Architecture**
+- **Deployment**: Google Cloud Run (Serverless containers)
+- **Runtime**: Python 3.11 + Flask
+- **Authentication**: Cloud Run service account (`dts-cloud-run-deploy-sa`)
+- **Transfer Method**: BigQuery native cross-project copy (no intermediate storage)
+- **Execution**: HTTP POST triggers via authenticated API endpoints
 
 ## **Files**
 
-- **`bq_transfer.sh`** - Main transfer script with automatic remediation
-- **`test_bq_transfer.sh`** - Comprehensive test suite (10 validation steps)
-- **`README.md`** - This documentation
+### **Cloud Run Deployment**
+- **`main.py`** - Cloud Run service implementation (Python/Flask)
+- **`Dockerfile`** - Container image definition for Cloud Run
+- **`requirements.txt`** - Python dependencies
+- **`deploy-dev.sh`** - Deploy & run script for dev environment 
+- **`deploy-uat.sh`** - Deploy & run script for uat environment 
+
+### **Testing & Validation**
+- **`test_main.py`** - Python service test suite (10 validation steps)
 
 ## **Multi-Environment Support**
 
 ### **Environment Configuration**
-The scripts support two environments with different redaction levels:
+The Cloud Run service supports two environments with different redaction levels:
 
-| Environment | Usage | Dataset | Redaction Level |
-|-------------|-------|---------|-----------------|
-| **DEV** | `./bq_transfer.sh dev` | `dev_dts` | Full redaction (all → NULL) |
-| **UAT** | `./bq_transfer.sh uat` | `uat_dts` | No redaction (original data) |
+| Environment | Cloud Run Service | Dataset | Redaction Level |
+|-------------|-------------------|---------|-----------------|
+| **DEV** | `bq-transfer-dev` | `dev_dts` | Full redaction (all → NULL) |
+| **UAT** | `bq-transfer-uat` | `uat_dts` | No redaction (original data) |
 
 ### **Current Project Setup**
-All environments currently use the same projects for testing:
-- **Source:** `sbox-rgodoy-001-20251124`
-- **Destination:** `sbox-rgodoy-002-20251008`
+All environments currently use the same projects:
+- **Source:** `sbox-rgodoy-001-20251124` (read-only access)
+- **Destination:** `sbox-rgodoy-002-20251008` (write access)
+- **Cloud Run Region:** `us-central1`
 
-## **Infrastructure Requirements**
+## **Cloud Run Infrastructure**
 
-### **Minimal Setup:**
-- **Local Machine/Server** - Where scripts run
-- **Google Cloud SDK** - For `gcloud` and `bq` commands
-- **Service Account Keyfile** - JSON authentication file
-- **Network Access** - Internet connectivity to Google Cloud APIs
-
-### **BigQuery Native Copy Technique:**
-- **Direct project-to-project transfer** - No intermediate storage
-- **Preserves all metadata** - Schema, partitioning, clustering
-- **Atomic operation** - Complete success or clean failure
-- **Location-aware** - Requires same region for source/destination
+### **Components**
+- **Cloud Run Service** - Serverless container hosting the Flask API
+- **Google Container Registry** - Stores Docker images
+- **Cloud Build** - Builds and pushes container images
+- **BigQuery API** - Data transfer and transformation
+- **Service Account** - `dts-cloud-run-deploy-sa@sbox-rgodoy-002-20251008.iam.gserviceaccount.com`
 
 ## **Pricing**
 
-### **BigQuery Copy (`bq cp`) Pricing:**
-- **✅ Copy Operation:** FREE (no charges)
-- **📊 Storage Only:** $0.02/GB/month (active) or $0.01/GB/month (long-term)
-- **🌐 Same Region:** FREE (no transfer fees)
+### **BigQuery Costs:**
+- **Copy Operation:** FREE (no charges)
+- **Storage Only:** $0.02/GB/month (active) or $0.01/GB/month (long-term)
+- **Same Region:** FREE (no transfer fees)
 
-### **Cost Examples:**
-| Dataset Size | Copy Cost | Monthly Storage |
-|--------------|-----------|----------------|
-| **1 GB** | FREE | $0.02 |
-| **100 GB** | FREE | $2.00 |
-| **1 TB** | FREE | $20.00 |
 
-## **Quick Start**
+## **Quick Start - Cloud Run Deployment**
 
-### **1. Setup Authentication**
 ```bash
-export BQ_AUTH_KEYFILE="/path/to/your/service-account-key.json"
+
+# Deploy & execute transfer for DEV (with redaction)
+./deploy-dev.sh
+
+# Deploy & execute transfer for UAT (no redaction)
+./deploy-uat.sh
 ```
 
-### **2. Run Tests & Transfer**
+**What happens:**
+1. ✅ Builds Docker container image
+2. ✅ Pushes to Google Container Registry  
+3. ✅ Deploys to Cloud Run
+4. ✅ Automatically triggers dataset transfer
+5. ✅ Shows transfer results and logs
 
-**Development Environment:**
+---
+
+### **Alternative: Step-by-Step Testing**
+
+If you want to test before deploying:
+
+#### **1. Test Locally (Optional)**
 ```bash
-./test_bq_transfer.sh dev
-./bq_transfer.sh dev
+# Install dependencies
+pip install -r requirements.txt
+
+# Run Python test suite
+python3 test_main.py dev  # or uat
 ```
 
-**UAT Environment:**
+#### **2. Deploy to Cloud Run**
 ```bash
-./test_bq_transfer.sh uat
-./bq_transfer.sh uat
+./deploy-dev.sh  # or ./deploy-uat.sh
 ```
 
-### **3. Redaction Tactics**
-
-**Available Tactics:**
-- `redact` - Set column value to NULL (full redaction)
-- `mask` - Partial masking (shows last 4 characters for strings)
-- `FF` - FARM_FINGERPRINT hash (preserves uniqueness for numeric data)
-- `hash` - SHA256 hash (preserves uniqueness for analysis)
-
-**Environment-Specific Behavior:**
-- **DEV:** Full redaction for testing (all sensitive data → NULL)
-- **UAT:** No redaction (original data preserved for analysis)
-
-## **Test Suite (10 Steps)**
-
-1. **Authentication Validation** - Verifies keyfile and project access
-2. **Environment Configuration** - Validates environment and tactics
-3. **Dataset Existence** - Confirms source and destination datasets
-4. **Table Existence** - Validates required tables exist
-5. **Schema Analysis** - Extracts and validates table schemas
-6. **Data Counts** - Confirms data exists for transfer
-7. **Sensitive Data Detection** - Analyzes columns requiring remediation
-8. **SQL Generation** - Tests remediation query syntax for all tactics
-9. **Copy Command Validation** - Verifies bq copy availability
-10. **Permission Verification** - Confirms required BigQuery roles
-
-## **Transfer Process**
-
-1. **Authentication Validation** - Tests keyfile before proceeding
-2. **Dataset Processing** - Processes each configured dataset
-3. **Table Copying** - Uses `bq cp` to copy tables with overwrite
-4. **Automatic Remediation** - Applies redaction to sensitive columns
-
-## **Workflow**
-
-1. **Choose Environment** - Select dev or uat
-2. **Run Tests** - `./test_bq_transfer.sh [environment]`
-3. **Review Results** - Fix any issues found
-4. **Execute Transfer** - `./bq_transfer.sh [environment]`
-5. **Verify Data** - Check destination dataset
-
-**Example:**
+#### **3. Manual Trigger (if needed)**
 ```bash
-# Test UAT environment
-./test_bq_transfer.sh uat
+# Get service URL
+SERVICE_URL=$(gcloud run services describe bq-transfer-dev \
+    --region us-central1 \
+    --project sbox-rgodoy-002-20251008 \
+    --format="value(status.url)")
 
-# If tests pass, run transfer
-./bq_transfer.sh uat
+# Trigger transfer manually
+curl -H "Authorization: Bearer $(gcloud auth print-identity-token)" \
+     -H "Content-Type: application/json" \
+     -X POST \
+     -d '{"environment": "dev"}' \
+     "$SERVICE_URL/transfer"
 ```
+
+#### **4. View Logs**
+```bash
+gcloud logging read \
+    "resource.type=cloud_run_revision AND resource.labels.service_name=bq-transfer-dev" \
+    --project=sbox-rgodoy-002-20251008 \
+    --limit=50
+```
+
+---
 
 ## **Required Permissions**
 
-### **Source Project Service Account:**
-- BigQuery Data Viewer
-- BigQuery Data Editor
-- BigQuery Job User
-- BigQuery Metadata Viewer
+### **Cloud Run Service Account**
+Service Account: `dts-cloud-run-deploy-sa@sbox-rgodoy-002-20251008.iam.gserviceaccount.com`
 
-### **Destination Project Service Account in Source Project:**
-- BigQuery Data Viewer 
-- BigQuery Metadata Viewer
-
-### **Destination Project Service Account:**
-- BigQuery Data Editor
-- BigQuery Job User
-- BigQuery Metadata Viewer
+### **Summary of Required Roles:**
+| Project | Role | Purpose |
+|---------|------|---------|
+| **Source (001)** | `bigquery.dataViewer` | Read tables and data |
+| **Source (001)** | `bigquery.jobUser` | Run queries to check data |
+| **Destination (002)** | `bigquery.dataEditor` | Create/update/copy tables |
+| **Destination (002)** | `bigquery.jobUser` | Run copy and redaction jobs |
 
 ## **Troubleshooting**
 
-### **Common Issues:**
+### **Common Cloud Run Issues:**
 
-**Authentication Errors:**
-- Check keyfile path and permissions
-- Verify service account has required roles
-- Test manually: `bq ls --project_id=PROJECT_ID`
+**Permission Errors (403):**
+```
+ERROR: Access Denied: Dataset ... Permission bigquery.xxx.xxx denied
+```
+- Verify service account has required roles on BOTH projects
+- Run the permission grant commands above
+- Check that service account exists: `dts-cloud-run-deploy-sa@sbox-rgodoy-002-20251008.iam.gserviceaccount.com`
 
-**Dataset Not Found:**
-- Verify dataset names and projects
-- Check dataset locations match
-- Confirm access permissions
+**Transfer Failed (500):**
+```
+{"status": "error", "message": "Dataset transfer failed!"}
+```
+- View logs: `gcloud logging read "resource.type=cloud_run_revision AND resource.labels.service_name=bq-transfer-dev" --project=sbox-rgodoy-002-20251008 --limit=50`
+- Check if destination dataset exists
+- Verify source and destination regions match
 
-**Table Copy Failures:**
-- Check table exists in source
-- Verify destination permissions
-- Check for naming conflicts
+**Deployment Failures:**
+```
+Cloud Build failed
+```
+- Check Docker image build logs in Cloud Console
+- Verify `main.py`, `Dockerfile`, and `requirements.txt` exist
+- Ensure Cloud Build API is enabled
 
-**Remediation Failures:**
-- Verify column names exist
-- Check SQL syntax
-- Confirm destination table permissions
+**Service Not Found:**
+```
+Could not get service URL
+```
+- Service may still be deploying (wait 1-2 minutes)
+- Check if service exists: `gcloud run services list --project=sbox-rgodoy-002-20251008`
+- Verify you're in the correct project
